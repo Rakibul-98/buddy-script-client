@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 import GoogleSignInButton from "./GoogleSignInButton";
+import Image from "next/image";
 
 interface LoginFormData {
   email: string;
@@ -55,17 +56,45 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-8">
-        <div>
-          <h2 className="text-center text-3xl font-bold">Sign in to your account</h2>
+    <div className=" flex flex-col md:flex-row gap-10 justify-between items-center">
+      <div className="hidden lg:block relative w-full lg:w-1/2 h-150">
+        <Image
+          src="/assets/login_img.png"
+          alt="Login Image"
+          fill
+          className="object-contain object-center"
+          priority
+        />
+      </div>
+
+      <div className="w-100 mx-auto lg:mx-0 bg-white z-50 p-12 rounded-sm">
+        <div className="mb-12.5">
+          <div className="relative w-40 h-10 mx-auto mb-7">
+            <Image
+              src="/assets/logo.svg"
+              alt="logo Image"
+              fill
+              className="object-contain object-center"
+              priority
+            />
+          </div>
+          <p className="text-xl text-center mb-2">Welcome back</p>
+          <h2 className="text-center text-2xl sm:text-3xl font-bold">Sign in to your account</h2>
+        </div>
+        <div className="mb-10">
+          <GoogleSignInButton mode="login" />
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="flex items-center gap-10 mb-10">
+          <div className="border h-0.5 w-full"></div>
+          <p className="text-muted-foreground">Or</p>
+          <div className="border h-0.5 w-full"></div>
+        </div>
 
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              Email address
+            <label htmlFor="email" className="block text-sm font-medium mb-2">
+              Email
             </label>
             <input
               id="email"
@@ -77,7 +106,7 @@ export default function Login() {
                   message: "Invalid email address",
                 },
               })}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className=" block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF] text-lg"
             />
             {errors.email && (
               <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
@@ -85,7 +114,7 @@ export default function Login() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium">
+            <label htmlFor="password" className="block text-sm font-medium mb-2">
               Password
             </label>
             <input
@@ -98,24 +127,36 @@ export default function Login() {
                   message: "Password must be at least 6 characters",
                 },
               })}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF] text-lg"
             />
             {errors.password && (
               <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
+          <div className="flex justify-between items-center gap-3 mb-10">
+            <div className="flex gap-2 items-center">
+              <div className="h-4 w-4 rounded-full border border-[#1890FF] p-0.75">
+                <div className="h-full w-full rounded-full bg-[#1890FF]" />
+              </div>
+              <p>Remember me</p>
+            </div>
+            <p className="text-[#1890FF]">Forgot password?</p>
+          </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-sm bg-[#1890FF] px-4 py-3 text-white hover:bg-[#1890FF]/95 hover:shadow-lg focus:outline-none "
           >
-            {isLoading ? "Signing in..." : "Sign in"}
+            {isLoading ? "Logging in..." : "Login now"}
           </button>
         </form>
-        <GoogleSignInButton mode="login" />
-        <Link href="/registration">Create account</Link>
 
+        <div className="mt-6 text-center text-muted-foreground">Dont have an account? {" "}
+          <Link href="/registration" className="text-[#1890FF] hover:text-[#1890FF]/95 font-medium">
+            Create New Account
+          </Link>
+        </div>
       </div>
     </div>
   );
