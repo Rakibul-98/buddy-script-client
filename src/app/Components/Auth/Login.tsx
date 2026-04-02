@@ -8,6 +8,7 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 interface LoginFormData {
   email: string;
@@ -107,6 +108,7 @@ export default function Login() {
             {isLoading ? "Signing in..." : "Sign in"}
           </button>
         </form>
+        <GoogleSignInButton mode="login" />
         <Link href="/registration">Create account</Link>
 
       </div>

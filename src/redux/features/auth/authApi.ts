@@ -18,7 +18,15 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    googleLogin: builder.mutation<AuthResponse, { token: string }>({
+      query: (data) => ({
+        url: "/auth/google",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGoogleLoginMutation } =
+  authApi;
