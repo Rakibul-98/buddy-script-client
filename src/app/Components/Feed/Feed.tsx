@@ -13,6 +13,7 @@ import {
   useDeletePostMutation,
 } from "@/redux/features/post/postApi";
 import { useAppSelector } from "@/redux/hooks";
+import CommentSection from "./Comment/CommentSection";
 
 // Helper function to format time ago
 function timeAgo(date: string): string {
@@ -197,11 +198,10 @@ export default function Feed() {
                         {post.visibility === "PUBLIC" ? "Public" : "Private"}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500">{post.author.email}</span>
                   </div>
 
                   {/* Delete Button (only show for post owner) */}
-                  {user?.id === post.authorId && (
+                  {user?.email === post.author.email && (
                     <Button
                       onClick={() => handleDeletePost(post.id)}
                       variant="outline"
@@ -241,6 +241,7 @@ export default function Feed() {
                     <span>{post._count.comments} comments</span>
                   </div>
                 </div>
+                <CommentSection postId={post.id} />
               </div>
             ))
           )}
