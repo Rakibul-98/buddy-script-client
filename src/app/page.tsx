@@ -1,9 +1,18 @@
+"use client";
+
+import { useAppSelector } from "@/redux/hooks";
+import FeedPage from "./(private)/feed/page";
 import Login from "./Components/Auth/Login";
 
 export default function HomePage() {
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  const { user, accessToken } = useAppSelector((state) => state.auth);
+  const isAuthenticated = !!user && !!accessToken;
+
+  console.log(isAuthenticated);
+
+  if (isAuthenticated) {
+    return <FeedPage />;
+  }
+
+  return <Login />;
 }
