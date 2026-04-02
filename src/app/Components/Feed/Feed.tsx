@@ -11,9 +11,11 @@ import {
   useGetPostsQuery,
   useCreatePostMutation,
   useDeletePostMutation,
+  useUpdatePostMutation,
 } from "@/redux/features/post/postApi";
 import { useAppSelector } from "@/redux/hooks";
 import CommentSection from "./Comment/CommentSection";
+import PostCard from "./Post/PostCard";
 
 // Helper function to format time ago
 function timeAgo(date: string): string {
@@ -46,6 +48,8 @@ export default function Feed() {
 
   const { data, isLoading, refetch } = useGetPostsQuery({ limit: 10 });
   const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
+  const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
+
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
 
   const handleLogout = () => {
@@ -78,6 +82,28 @@ export default function Feed() {
       refetch();
     } catch (err: any) {
       toast.error(err.data?.message || "Failed to create post");
+    }
+  };
+
+  const handleEditPost = async (
+    postId: string,
+    content: string,
+    visibility: "PUBLIC" | "PRIVATE",
+    image?: File
+  ) => {
+    try {
+      const formData = new FormData();
+      formData.append("content", content);
+      formData.append("visibility", visibility);
+      if (image) {
+        formData.append("image", image);
+      }
+
+      await updatePost({ id: postId, data: formData }).unwrap();
+      toast.success("Post updated successfully!");
+      refetch();
+    } catch (err: any) {
+      toast.error(err.data?.message || "Failed to update post");
     }
   };
 
@@ -183,66 +209,73 @@ export default function Feed() {
             </div>
           ) : (
             posts.map((post) => (
-              <div key={post.id} className="bg-white rounded-lg shadow p-6">
-                {/* Post Header */}
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-gray-900">
-                        {post.author.firstName} {post.author.lastName}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        {timeAgo(post.createdAt)}
-                      </span>
-                      <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
-                        {post.visibility === "PUBLIC" ? "Public" : "Private"}
-                      </span>
-                    </div>
-                  </div>
+              // <div key={post.id} className="bg-white rounded-lg shadow p-6">
+              //   {/* Post Header */}
+              //   <div className="flex justify-between items-start mb-4">
+              //     <div>
+              //       <div className="flex items-center gap-2">
+              //         <span className="font-semibold text-gray-900">
+              //           {post.author.firstName} {post.author.lastName}
+              //         </span>
+              //         <span className="text-xs text-gray-500">
+              //           {timeAgo(post.createdAt)}
+              //         </span>
+              //         <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+              //           {post.visibility === "PUBLIC" ? "Public" : "Private"}
+              //         </span>
+              //       </div>
+              //     </div>
 
-                  {/* Delete Button (only show for post owner) */}
-                  {user?.email === post.author.email && (
-                    <Button
-                      onClick={() => handleDeletePost(post.id)}
-                      variant="outline"
-                      size="sm"
-                      disabled={isDeleting}
-                      className="text-red-600 hover:bg-red-50"
-                    >
-                      Delete
-                    </Button>
-                  )}
-                </div>
+              //     {/* Delete Button (only show for post owner) */}
+              //     {user?.email === post.author.email && (
+              //       <Button
+              //         onClick={() => handleDeletePost(post.id)}
+              //         variant="outline"
+              //         size="sm"
+              //         disabled={isDeleting}
+              //         className="text-red-600 hover:bg-red-50"
+              //       >
+              //         Delete
+              //       </Button>
+              //     )}
+              //   </div>
 
-                {/* Post Content */}
-                <div className="mb-4">
-                  <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
-                </div>
+              //   {/* Post Content */}
+              //   <div className="mb-4">
+              //     <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
+              //   </div>
 
-                {/* Post Image */}
-                {post.imageUrl && (
-                  <div className="mb-4">
-                    <img
-                      src={post.imageUrl}
-                      alt="Post image"
-                      className="rounded-lg max-h-96 w-full object-cover"
-                    />
-                  </div>
-                )}
+              //   {/* Post Image */}
+              //   {post.imageUrl && (
+              //     <div className="mb-4">
+              //       <img
+              //         src={post.imageUrl}
+              //         alt="Post image"
+              //         className="rounded-lg max-h-96 w-full object-cover"
+              //       />
+              //     </div>
+              //   )}
 
-                {/* Post Stats */}
-                <div className="flex gap-6 pt-4 border-t text-sm text-gray-500">
-                  <div className="flex items-center gap-1">
-                    <span>❤️</span>
-                    <span>{post._count.likes} likes</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span>💬</span>
-                    <span>{post._count.comments} comments</span>
-                  </div>
-                </div>
-                <CommentSection postId={post.id} />
-              </div>
+              //   {/* Post Stats */}
+              //   <div className="flex gap-6 pt-4 border-t text-sm text-gray-500">
+              //     <div className="flex items-center gap-1">
+              //       <span>❤️</span>
+              //       <span>{post._count.likes} likes</span>
+              //     </div>
+              //     <div className="flex items-center gap-1">
+              //       <span>💬</span>
+              //       <span>{post._count.comments} comments</span>
+              //     </div>
+              //   </div>
+              //   <CommentSection postId={post.id} />
+              // </div>
+              <PostCard
+                key={post.id}
+                post={post}
+                onEdit={handleEditPost}
+                onDelete={handleDeletePost}
+                isDeleting={isDeleting}
+              />
             ))
           )}
         </div>

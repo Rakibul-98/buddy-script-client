@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
+import { useToggleLikeMutation } from "../../../../redux/features/like/likeApi";
 
 
 interface CommentProps {
@@ -45,12 +46,41 @@ export default function Comment({
   level = 0
 }: CommentProps) {
   const { user } = useAppSelector((state) => state.auth);
+  const [toggleLike, { isLoading: isTogglingLike }] = useToggleLikeMutation();
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const [editContent, setEditContent] = useState(comment.content);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(comment._count?.likes || 0);
 
-  console.log("Comment data:", comment);
+  useEffect(() => {
+    if (comment.likes && user?.id) {
+      const userLiked = comment.likes.some((like: any) => like.userId === user.id);
+      setIsLiked(userLiked);
+    }
+  }, [comment.likes, user?.id]);
+
+  const handleLike = async () => {
+    try {
+      const response = await toggleLike({
+        targetId: comment.id,
+        targetType: "COMMENT",
+      }).unwrap();
+
+      if (response.data?.liked) {
+        setIsLiked(true);
+        setLikesCount(prev => prev + 1);
+        toast.success("Comment liked!");
+      } else {
+        setIsLiked(false);
+        setLikesCount(prev => prev - 1);
+        toast.success("Comment unliked!");
+      }
+    } catch (err: any) {
+      toast.error(err.data?.message || "Failed to toggle like");
+    }
+  };
 
   const handleReplySubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -135,15 +165,28 @@ export default function Comment({
           <p className="text-gray-700 text-sm mb-2">{comment.content}</p>
         )}
 
-        {/* Reply Button */}
-        {!isEditing && (
+        {/* Comment Actions Buttons */}
+        <div className="flex gap-3">
+          {/* Like Button */}
           <button
-            onClick={() => setIsReplying(!isReplying)}
-            className="text-xs text-indigo-600 hover:text-indigo-800"
+            onClick={handleLike}
+            disabled={isTogglingLike}
+            className={`text-xs transition-colors ${isLiked ? "text-red-500" : "text-gray-500 hover:text-red-500"
+              }`}
           >
-            {isReplying ? "Cancel" : "Reply"}
+            {isLiked ? "❤️" : "🤍"} {likesCount > 0 && likesCount}
           </button>
-        )}
+
+          {/* Reply Button */}
+          {!isEditing && (
+            <button
+              onClick={() => setIsReplying(!isReplying)}
+              className="text-xs text-indigo-600 hover:text-indigo-800"
+            >
+              {isReplying ? "Cancel" : "Reply"}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Reply Input */}
