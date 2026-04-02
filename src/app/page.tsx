@@ -1,10 +1,9 @@
-import { Button } from "../components/ui/button";
+import Login from "./Components/Auth/Login";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div>
-      hello from next app
-      <Button className="underline" variant="outline">Button</Button>
+      <Login />
     </div>
   );
 }
