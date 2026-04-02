@@ -25,7 +25,12 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<LoginFormData>();
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      email: 'rakibul@test2.com',
+      password: '123456',
+    }
+  });
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -40,7 +45,7 @@ export default function Login() {
         );
         toast.success("Log in successful.")
         reset()
-        router.push("/");
+        router.push("/feed");
       } else {
         toast.error(response.message || "Login failed");
       }

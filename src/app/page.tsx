@@ -8,8 +8,6 @@ export default function HomePage() {
   const { user, accessToken } = useAppSelector((state) => state.auth);
   const isAuthenticated = !!user && !!accessToken;
 
-  console.log(isAuthenticated);
-
   if (isAuthenticated) {
     return <FeedPage />;
   }
