@@ -9,7 +9,7 @@ export default function PrivateLayout({
   children: React.ReactNode;
 }) {
   return <ProtectedRoute>
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="">
       {children}
     </div>
   </ProtectedRoute>;

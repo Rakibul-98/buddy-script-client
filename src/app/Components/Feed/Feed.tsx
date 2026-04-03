@@ -3,9 +3,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
-import { logout } from "@/redux/features/auth/authSlice";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   useGetPostsQuery,
@@ -13,14 +10,10 @@ import {
   useDeletePostMutation,
   useUpdatePostMutation,
 } from "@/redux/features/post/postApi";
-import { useAppSelector } from "@/redux/hooks";
 import PostCard from "./Post/PostCard";
-import Navbar from "./Navbar";
+import Navbar from "./Navbar/Navbar";
 
 export default function Feed() {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const { user } = useAppSelector((state) => state.auth);
   const [content, setContent] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [visibility, setVisibility] = useState<"PUBLIC" | "PRIVATE">("PUBLIC");
@@ -31,11 +24,6 @@ export default function Feed() {
 
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
 
-  const handleLogout = () => {
-    dispatch(logout());
-    toast.success("Logged out successfully");
-    router.push("/login");
-  };
 
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();

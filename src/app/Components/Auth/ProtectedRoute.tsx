@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -15,7 +14,6 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!user || !accessToken) {
-      toast.error("Please login to access this page");
       router.push("/login");
     }
   }, [user, accessToken, router]);
