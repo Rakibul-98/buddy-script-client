@@ -14,29 +14,8 @@ import {
   useUpdatePostMutation,
 } from "@/redux/features/post/postApi";
 import { useAppSelector } from "@/redux/hooks";
-import CommentSection from "./Comment/CommentSection";
 import PostCard from "./Post/PostCard";
-
-// Helper function to format time ago
-function timeAgo(date: string): string {
-  const now = new Date();
-  const past = new Date(date);
-  const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
-
-  if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
-  const diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
-  const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays < 7) return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
-  const diffInWeeks = Math.floor(diffInDays / 7);
-  if (diffInWeeks < 4) return `${diffInWeeks} week${diffInWeeks > 1 ? 's' : ''} ago`;
-  const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths < 12) return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''} ago`;
-  const diffInYears = Math.floor(diffInDays / 365);
-  return `${diffInYears} year${diffInYears > 1 ? 's' : ''} ago`;
-}
+import Navbar from "./Navbar";
 
 export default function Feed() {
   const dispatch = useDispatch();
@@ -134,19 +113,7 @@ export default function Feed() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Feed</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
-              Welcome, {user?.firstName} {user?.lastName}
-            </span>
-            <Button onClick={handleLogout} variant="outline">
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 lg:px-8">
         {/* Create Post Form */}
