@@ -63,7 +63,7 @@ export default function Registration() {
   return (
     <div className="flex flex-col lg:flex-row gap-2 lg:gap-10 justify-between items-center">
 
-      <AuthImage src="/assets/registration_img.png" alt="Registration Image" variant="registration" />
+      <AuthImage src="/assets/registration_image.png" alt="Registration Image" variant="registration" />
 
       <AuthCard
         title="Registration"
