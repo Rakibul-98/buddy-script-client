@@ -56,8 +56,8 @@ export default function Login() {
   };
 
   return (
-    <div className=" flex flex-col md:flex-row gap-10 justify-between items-center">
-      <div className="hidden lg:block relative w-full lg:w-1/2 h-150">
+    <div className=" flex flex-col lg:flex-row gap-2 lg:gap-10 justify-between items-center">
+      <div className="relative w-full lg:w-1/2 h-150">
         <Image
           src="/assets/login_img.png"
           alt="Login Image"
@@ -67,7 +67,7 @@ export default function Login() {
         />
       </div>
 
-      <div className="w-100 mx-auto lg:mx-0 bg-white z-50 p-12 rounded-sm">
+      <div className="w-full lg:w-100 mx-auto lg:mx-0 bg-white z-50 p-12 rounded-sm">
         <div className="mb-12.5">
           <div className="relative w-40 h-10 mx-auto mb-7">
             <Image
@@ -93,7 +93,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-2">
+            <label htmlFor="email" className="block text-sm font-medium mb-2 text-center lg:text-left">
               Email
             </label>
             <input
@@ -114,7 +114,7 @@ export default function Login() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-2">
+            <label htmlFor="password" className="block text-sm font-medium mb-2 text-center lg:text-left">
               Password
             </label>
             <input
@@ -133,26 +133,28 @@ export default function Login() {
               <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
-          <div className="flex justify-between items-center gap-3 mb-10">
+          <div className="md:flex justify-between items-center gap-3 mb-10">
             <div className="flex gap-2 items-center">
               <div className="h-4 w-4 rounded-full border border-[#1890FF] p-0.75">
                 <div className="h-full w-full rounded-full bg-[#1890FF]" />
               </div>
               <p>Remember me</p>
             </div>
-            <p className="text-[#1890FF]">Forgot password?</p>
+            <p className="text-[#1890FF] text-center">Forgot password?</p>
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-sm bg-[#1890FF] px-4 py-3 text-white hover:bg-[#1890FF]/95 hover:shadow-lg focus:outline-none "
-          >
-            {isLoading ? "Logging in..." : "Login now"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-49 lg:w-full rounded-sm bg-[#1890FF] px-4 py-3 text-white hover:bg-[#1890FF]/95 hover:shadow-lg focus:outline-none "
+            >
+              {isLoading ? "Logging in..." : "Login now"}
+            </button>
+          </div>
         </form>
 
-        <div className="mt-6 text-center text-muted-foreground">Dont have an account? {" "}
+        <div className="mt-15 text-center text-muted-foreground">Dont have an account? {" "}
           <Link href="/registration" className="text-[#1890FF] hover:text-[#1890FF]/95 font-medium">
             Create New Account
           </Link>

@@ -6,7 +6,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[#f0f2f5] relative py-25 px-30 min-h-screen">
+    <div className="bg-[#f0f2f5] relative py-12.5 md:py-25 px-3 sm:px-12 lg:px-30 min-h-screen">
       <Image
         src="/assets/shape1.svg"
         alt="Shape 1"
