@@ -53,7 +53,7 @@ export default function GoogleSignInButton({
     },
   });
 
-  const defaultText = mode === "login" ? "Or sign-in with Google" : "Sign up with Google";
+  const defaultText = mode === "login" ? "Or sign-in with Google" : "Register with Google";
   const displayText = buttonText || defaultText;
 
   return (

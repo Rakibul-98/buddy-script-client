@@ -154,7 +154,7 @@ export default function Login() {
           </div>
         </form>
 
-        <div className="mt-15 text-center text-muted-foreground">Dont have an account? {" "}
+        <div className="mt-15 text-center text-muted-foreground"><span>Dont have an account? {" "}</span>
           <Link href="/registration" className="text-[#1890FF] hover:text-[#1890FF]/95 font-medium">
             Create New Account
           </Link>

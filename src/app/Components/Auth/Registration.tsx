@@ -8,6 +8,8 @@ import { setCredentials } from "@/redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
+import GoogleSignInButton from "./GoogleSignInButton";
+import Image from "next/image";
 
 interface RegistrationFormData {
   firstName: string;
@@ -55,19 +57,45 @@ export default function Registration() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-8">
-        <div>
-          <h2 className="text-center text-3xl font-bold">Create an account</h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Sign up to get started
-          </p>
+    <div className="flex flex-col lg:flex-row gap-2 lg:gap-10 justify-between items-center">
+      <div className="relative w-full lg:w-1/2 h-110">
+        <Image
+          src="/assets/registration_img.png"
+          alt="Registration Image"
+          fill
+          className="object-contain object-center"
+          priority
+        />
+      </div>
+      <div className="w-full lg:w-100 mx-auto lg:mx-0 bg-white z-50 p-12 rounded-sm">
+        <div className="mb-12.5">
+          <div className="relative w-40 h-10 mx-auto mb-7">
+            <Image
+              src="/assets/logo.svg"
+              alt="logo Image"
+              fill
+              className="object-contain object-center"
+              priority
+            />
+          </div>
+          <p className="text-xl text-center mb-2">Get Started Now</p>
+          <h2 className="text-center text-2xl sm:text-3xl font-bold">Registration</h2>
+        </div>
+
+        <div className="mb-10">
+          <GoogleSignInButton mode="register" />
+        </div>
+
+        <div className="flex items-center gap-10 mb-10">
+          <div className="border h-0.5 w-full"></div>
+          <p className="text-muted-foreground">Or</p>
+          <div className="border h-0.5 w-full"></div>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium">
+              <label htmlFor="firstName" className="block text-sm font-medium mb-2 text-center lg:text-left">
                 First Name
               </label>
               <input
@@ -80,7 +108,7 @@ export default function Registration() {
                     message: "First name must be at least 2 characters",
                   },
                 })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF]"
               />
               {errors.firstName && (
                 <p className="mt-1 text-sm text-red-500">
@@ -90,7 +118,7 @@ export default function Registration() {
             </div>
 
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium">
+              <label htmlFor="lastName" className="block text-sm font-medium mb-2 text-center lg:text-left">
                 Last Name
               </label>
               <input
@@ -103,7 +131,7 @@ export default function Registration() {
                     message: "Last name must be at least 2 characters",
                   },
                 })}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF]"
               />
               {errors.lastName && (
                 <p className="mt-1 text-sm text-red-500">
@@ -114,8 +142,8 @@ export default function Registration() {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              Email address
+            <label htmlFor="email" className="block text-sm font-medium mb-2 text-center lg:text-left">
+              Email
             </label>
             <input
               id="email"
@@ -127,7 +155,7 @@ export default function Registration() {
                   message: "Invalid email address",
                 },
               })}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF]"
             />
             {errors.email && (
               <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
@@ -135,7 +163,7 @@ export default function Registration() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium">
+            <label htmlFor="password" className="block text-sm font-medium mb-2 text-center lg:text-left">
               Password
             </label>
             <input
@@ -152,7 +180,7 @@ export default function Registration() {
                   message: "Password must contain at least one letter and one number",
                 },
               })}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF]"
             />
             {errors.password && (
               <p className="mt-1 text-sm text-red-500">
@@ -162,8 +190,8 @@ export default function Registration() {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium">
-              Confirm Password
+            <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2 text-center lg:text-left">
+              Repeat Password
             </label>
             <input
               id="confirmPassword"
@@ -173,7 +201,7 @@ export default function Registration() {
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
               })}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+              className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF]"
             />
             {errors.confirmPassword && (
               <p className="mt-1 text-sm text-red-500">
@@ -181,22 +209,33 @@ export default function Registration() {
               </p>
             )}
           </div>
+          <div className="flex justify-center md:justify-start mb-10">
+            <div className="flex gap-2 items-center">
+              <div className="h-4 w-4 rounded-full border border-[#1890FF] p-0.75">
+                <div className="h-full w-full rounded-full bg-[#1890FF]" />
+              </div>
+              <p>I agree to terms & conditions</p>
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-49 lg:w-full rounded-sm bg-[#1890FF] px-4 py-3 text-white hover:bg-[#1890FF]/95 hover:shadow-lg focus:outline-none"
+            >
+              {isLoading ? "Creating account..." : "Sign up"}
+            </button>
+          </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {isLoading ? "Creating account..." : "Sign up"}
-          </button>
         </form>
 
-        <div className="text-center">
+        <div className="mt-15 text-center text-muted-foreground">
+          <span>Already have an account? {" "}</span>
           <Link
             href="/login"
-            className="text-sm text-indigo-600 hover:text-indigo-500"
+            className="text-[#1890FF] hover:text-[#1890FF]/95 font-medium"
           >
-            Already have an account? Sign in
+            Login now
           </Link>
         </div>
       </div>
