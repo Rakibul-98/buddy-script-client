@@ -79,7 +79,7 @@ export default function Login() {
             />
           </div>
           <p className="text-xl text-center mb-2">Welcome back</p>
-          <h2 className="text-center text-2xl sm:text-3xl font-bold">Sign in to your account</h2>
+          <h2 className="text-center text-2xl sm:text-3xl font-bold">Login to your account</h2>
         </div>
         <div className="mb-10">
           <GoogleSignInButton mode="login" />
