@@ -9,27 +9,11 @@ import CommentSection from "../Comment/CommentSection";
 import Image from "next/image";
 import PostMenu from "./PostMenu";
 import { useDeletePostMutation, useUpdatePostMutation } from "../../../../redux/features/post/postApi";
-
-
-function timeAgo(date: string): string {
-  const now = new Date();
-  const past = new Date(date);
-  const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
-
-  if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
-  const diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
-  const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays < 7) return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
-  const diffInWeeks = Math.floor(diffInDays / 7);
-  if (diffInWeeks < 4) return `${diffInWeeks} week${diffInWeeks > 1 ? 's' : ''} ago`;
-  const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths < 12) return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''} ago`;
-  const diffInYears = Math.floor(diffInDays / 365);
-  return `${diffInYears} year${diffInYears > 1 ? 's' : ''} ago`;
-}
+import { timeAgo } from "../../../utils";
+import LikedUserGroup from "./LikedUserGroup";
+import { CgSmileMouthOpen } from "react-icons/cg";
+import { MdOutlineComment } from "react-icons/md";
+import { PiShareFat } from "react-icons/pi";
 
 export default function PostCard({ post, refetch }: any) {
   const { user } = useAppSelector((state) => state.auth);
@@ -41,7 +25,6 @@ export default function PostCard({ post, refetch }: any) {
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post._count?.likes || 0);
 
-  // Check if current user has liked the post
   useState(() => {
     if (post.likes && user?.id) {
       const userLiked = post.likes.some((like: any) => like.userId === user.id);
@@ -151,10 +134,7 @@ export default function PostCard({ post, refetch }: any) {
               isPrivate={post.visibility === "PRIVATE"}
             />
           )}
-
         </div>
-
-
       </div>
 
       <div className="mb-4">
@@ -163,28 +143,32 @@ export default function PostCard({ post, refetch }: any) {
 
       {post.imageUrl && (
         <div className="mb-4">
-          <img
+          <Image
             src={post.imageUrl}
             alt="Post image"
+            width={800}
+            height={600}
             className="rounded-lg max-h-96 w-full object-cover"
           />
         </div>
       )}
 
-      <div className="flex gap-6 pt-4 border-t text-sm text-gray-500">
-        <button
-          onClick={handleLike}
-          disabled={isTogglingLike}
-          className={`flex items-center gap-1 transition-colors ${isLiked ? "text-red-500" : "hover:text-red-500"
-            }`}
-        >
-          <span>{isLiked ? "❤️" : "🤍"}</span>
-          <span>{likesCount} {likesCount === 1 ? "like" : "likes"}</span>
-        </button>
-        <div className="flex items-center gap-1">
-          <span>💬</span>
+      <div className="flex justify-between gap-6 pt-2 text-sm text-muted-foreground">
+        <LikedUserGroup likesCount={likesCount} />
+        <div className="flex items-center gap-3">
           <span>{post._count.comments} {post._count.comments === 1 ? "comment" : "comments"}</span>
+          <span>122 Shares</span>
         </div>
+      </div>
+
+      <div className="bg-[#fbfcfd] p-2 flex justify-between mt-6 gap-1">
+        <button
+          onClick={handleLike} className={`w-full hover:bg-[#e4f1fd] ${isLiked && "bg-[#e4f1fd]"}  py-2 flex justify-center items-center gap-1`}>
+          <span className="text-2xl">😆</span>
+          Haha
+        </button>
+        <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><MdOutlineComment size={25} /> Comment</button>
+        <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><PiShareFat size={25} /> Share</button>
       </div>
 
       <CommentSection postId={post.id} />

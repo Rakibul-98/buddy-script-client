@@ -91,7 +91,7 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
   const totalComments = comments.length;
 
   return (
-    <div className="mt-4 pt-4 border-t">
+    <div className=" pt-4">
       <h3 className="text-lg font-semibold mb-3">
         Comments ({totalComments})
       </h3>
