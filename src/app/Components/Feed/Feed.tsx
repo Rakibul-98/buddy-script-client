@@ -102,13 +102,13 @@ export default function Feed() {
   const posts = data?.data || [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f5f5f5]">
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 py-4.5 xl:px-0 grid grid-cols-4 gap-6">
         <ExploreSection />
         <main className="col-span-2">
           {/* Create Post Form */}
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
+          <div className="bg-white rounded-md shadow p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Create a Post</h2>
             <form onSubmit={handleCreatePost} className="space-y-4">
               <div>

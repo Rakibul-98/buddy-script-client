@@ -70,7 +70,7 @@ export default function PostCard({ post, onEdit, onDelete, isDeleting }: PostCar
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white rounded-md shadow p-6">
       <div className="flex justify-between items-start mb-4">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
