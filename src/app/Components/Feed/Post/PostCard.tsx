@@ -8,13 +8,8 @@ import { toast } from "sonner";
 import CommentSection from "../Comment/CommentSection";
 import Image from "next/image";
 import PostMenu from "./PostMenu";
+import { useDeletePostMutation, useUpdatePostMutation } from "../../../../redux/features/post/postApi";
 
-interface PostCardProps {
-  post: any;
-  onEdit: (id: string, content: string, visibility: "PUBLIC" | "PRIVATE", image?: File) => void;
-  onDelete: (id: string) => void;
-  isDeleting?: boolean;
-}
 
 function timeAgo(date: string): string {
   const now = new Date();
@@ -36,8 +31,12 @@ function timeAgo(date: string): string {
   return `${diffInYears} year${diffInYears > 1 ? 's' : ''} ago`;
 }
 
-export default function PostCard({ post, onEdit, onDelete, isDeleting }: PostCardProps) {
+export default function PostCard({ post, refetch }: any) {
   const { user } = useAppSelector((state) => state.auth);
+
+  const [updatePost] = useUpdatePostMutation();
+  const [deletePost] = useDeletePostMutation();
+
   const [toggleLike, { isLoading: isTogglingLike }] = useToggleLikeMutation();
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post._count?.likes || 0);
@@ -71,6 +70,52 @@ export default function PostCard({ post, onEdit, onDelete, isDeleting }: PostCar
     }
   };
 
+  const handleDelete = async () => {
+    if (!confirm("Delete this post?")) return;
+
+    try {
+      await deletePost(post.id).unwrap();
+      toast.success("Deleted!");
+      refetch();
+    } catch (err: any) {
+      toast.error("Failed to delete");
+    }
+  };
+
+  const handleToggleVisibility = async () => {
+    const newVisibility =
+      post.visibility === "PUBLIC" ? "PRIVATE" : "PUBLIC";
+
+    try {
+      await updatePost({
+        id: post.id,
+        data: { visibility: newVisibility },
+      }).unwrap();
+
+      toast.success("Updated!");
+      refetch();
+    } catch {
+      toast.error("Failed");
+    }
+  };
+
+  const handleEdit = async () => {
+    const newContent = prompt("Edit post", post.content);
+    if (!newContent) return;
+
+    try {
+      await updatePost({
+        id: post.id,
+        data: { content: newContent },
+      }).unwrap();
+
+      toast.success("Updated!");
+      refetch();
+    } catch {
+      toast.error("Failed");
+    }
+  };
+
   return (
     <div className="bg-white rounded-md p-6">
       <div className="flex justify-between items-start mb-4">
@@ -99,7 +144,12 @@ export default function PostCard({ post, onEdit, onDelete, isDeleting }: PostCar
             </div>
           </div>
           {user?.email === post.author.email && (
-            <PostMenu />
+            <PostMenu
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onToggleVisibility={handleToggleVisibility}
+              isPrivate={post.visibility === "PRIVATE"}
+            />
           )}
 
         </div>
