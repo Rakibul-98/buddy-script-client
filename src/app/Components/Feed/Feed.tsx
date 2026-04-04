@@ -14,6 +14,8 @@ import PostCard from "./Post/PostCard";
 import Navbar from "./Navbar/Navbar";
 import ExploreSection from "./LeftBar/ExploreSection";
 import FriendsSection from "./RightBar/FriendsSection";
+import SuggestedPeople from "./LeftBar/SuggestedPeople";
+import Events from "./LeftBar/Events";
 
 export default function Feed() {
   const [content, setContent] = useState("");
@@ -105,7 +107,11 @@ export default function Feed() {
     <div className="min-h-screen bg-[#f5f5f5]">
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 py-4.5 xl:px-0 grid grid-cols-4 gap-6">
-        <ExploreSection />
+        <div className="space-y-4.5">
+          <ExploreSection />
+          <SuggestedPeople />
+          <Events />
+        </div>
         <main className="col-span-2">
           {/* Create Post Form */}
           <div className="bg-white rounded-md shadow p-6 mb-8">
