@@ -4,7 +4,7 @@ import React from 'react'
 export default function Events() {
   return (
     <div>
-      <div className="bg-white rounded-md p-6 h-fit">
+      <div className="bg-white rounded-md p-6">
         <div className='flex justify-between items-center gap-2 mb-6'>
           <h3 className="text-xl ">Events</h3>
           <span className='text-xs text-[#1890FF] cursor-pointer'>See All</span>

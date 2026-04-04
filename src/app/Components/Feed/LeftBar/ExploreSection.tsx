@@ -53,7 +53,7 @@ export default function ExploreSection() {
   ];
 
   return (
-    <div className="bg-white rounded-md p-6 h-fit">
+    <div className="bg-white rounded-md p-6">
       <h3 className="text-xl mb-4">Explore</h3>
       <div className="space-y-5">
         {exploreItems.map(({ Icon, label, id, new: isNew }) => (

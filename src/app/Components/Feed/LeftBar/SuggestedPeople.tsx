@@ -25,7 +25,7 @@ export default function SuggestedPeople() {
   ]
 
   return (
-    <div className="bg-white rounded-md p-6 h-fit">
+    <div className="bg-white rounded-md p-6">
       <div className='flex justify-between items-center gap-2 mb-4'>
         <h3 className="text-xl ">Suggested People</h3>
         <span className='text-xs text-[#1890FF] cursor-pointer'>See All</span>

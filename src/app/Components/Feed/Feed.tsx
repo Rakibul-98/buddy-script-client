@@ -16,6 +16,7 @@ import ExploreSection from "./LeftBar/ExploreSection";
 import FriendsSection from "./RightBar/FriendsSection";
 import SuggestedPeople from "./LeftBar/SuggestedPeople";
 import Events from "./LeftBar/Events";
+import YourFriends from "./RightBar/YourFriends";
 
 export default function Feed() {
   const [content, setContent] = useState("");
@@ -184,7 +185,10 @@ export default function Feed() {
             )}
           </div>
         </main>
-        <FriendsSection />
+        <div className="space-y-4.5">
+          <FriendsSection />
+          <YourFriends />
+        </div>
       </div>
     </div>
   );
