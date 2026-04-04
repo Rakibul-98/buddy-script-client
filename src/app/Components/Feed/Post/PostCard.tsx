@@ -6,6 +6,8 @@ import { useAppSelector } from "@/redux/hooks";
 import { useToggleLikeMutation } from "@/redux/features/like/likeApi";
 import { toast } from "sonner";
 import CommentSection from "../Comment/CommentSection";
+import Image from "next/image";
+import PostMenu from "./PostMenu";
 
 interface PostCardProps {
   post: any;
@@ -70,33 +72,39 @@ export default function PostCard({ post, onEdit, onDelete, isDeleting }: PostCar
   };
 
   return (
-    <div className="bg-white rounded-md shadow p-6">
+    <div className="bg-white rounded-md p-6">
       <div className="flex justify-between items-start mb-4">
-        <div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold text-gray-900">
-              {post.author.firstName} {post.author.lastName}
-            </span>
-            <span className="text-xs text-gray-500">
-              {timeAgo(post.createdAt)}
-            </span>
-            <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
-              {post.visibility === "PUBLIC" ? "Public" : "Private"}
-            </span>
+        <div className=" w-full flex justify-between items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/assets/post_img.png"
+              alt="txt img"
+              height={44}
+              width={44}
+              priority
+            />
+            <div>
+              <span className="text-lg">
+                {post.author.firstName} {post.author.lastName}
+              </span>
+              <div className="text-muted-foreground text-sm">
+                <span>
+                  {timeAgo(post.createdAt)}
+                </span>
+                <span className="px-1">.</span>
+                <span>
+                  {post.visibility === "PUBLIC" ? "Public" : "Private"}
+                </span>
+              </div>
+            </div>
           </div>
+          {user?.email === post.author.email && (
+            <PostMenu />
+          )}
+
         </div>
 
-        {/* {user?.id === post.authorId && (
-          <PostMenu
-            postId={post.id}
-            postContent={post.content}
-            postImageUrl={post.imageUrl}
-            postVisibility={post.visibility}
-            onEdit={onEdit}
-            onDelete={onDelete}
-            isDeleting={isDeleting}
-          />
-        )} */}
+
       </div>
 
       <div className="mb-4">

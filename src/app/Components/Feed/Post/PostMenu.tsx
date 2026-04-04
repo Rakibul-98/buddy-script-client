@@ -1,0 +1,46 @@
+import { HiDotsVertical } from "react-icons/hi";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../../../../components/ui/dropdown-menu";
+import { CiBookmark } from "react-icons/ci";
+import { BiBell } from "react-icons/bi";
+import { AiOutlineCloseSquare } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
+import { LuTrash2 } from "react-icons/lu";
+
+export default function PostMenu() {
+
+  const menuItems = [
+    { icon: CiBookmark, label: "Save Post" },
+    { icon: BiBell, label: "Turn On Notification" },
+    { icon: AiOutlineCloseSquare, label: "Hide" },
+    { icon: FiEdit, label: "Edit Post" },
+    { icon: LuTrash2, label: "Delete Post" },
+  ];
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="focus:outline-none">
+        <HiDotsVertical size={18} className="cursor-pointer hover:text-[#1890FF] text-muted-foreground transition-colors duration-200" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-75 p-4 mt-2 rounded-md shadow ring-0"
+        side="bottom"
+        align="end">
+
+        {menuItems.map(({ icon: Icon, label }) => (
+          <div
+            key={label}
+            className="cursor-pointer px-0 py-2 focus:bg-transparent"
+          >
+            <div className={`flex items-center justify-between w-full text-muted-foreground hover:text-[#1890FF] transition-colors duration-200`}>
+              <p className="flex items-center gap-3 text-base">
+                <span className="bg-[#ebf2ff] p-2.75 rounded-full">
+                  <Icon size={21} className="text-[#1890FF]" />
+                </span>
+                {label}
+              </p>
+            </div>
+          </div>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}

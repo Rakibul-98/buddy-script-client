@@ -79,15 +79,11 @@ export default function Feed() {
           <Events />
         </div>
         <main className="col-span-2 space-y-4.5">
-          {/* <StorySection /> */}
           <CreatePostSection onPostCreated={refetch} />
 
-          {/* Posts Display */}
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold mb-4">All Posts</h2>
-
             {posts.length === 0 ? (
-              <div className="bg-white rounded-lg shadow p-8 text-center">
+              <div className="bg-white rounded-lg p-8 text-center">
                 <p className="text-gray-500">No posts yet. Be the first to create a post!</p>
               </div>
             ) : (
