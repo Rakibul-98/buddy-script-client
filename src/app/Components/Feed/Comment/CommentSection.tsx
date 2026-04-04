@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useCreateCommentMutation, useDeleteCommentMutation, useGetCommentsByPostIdQuery, useUpdateCommentMutation } from "../../../../redux/features/comment/commentApi";
 import Comment from "./Comment";
+import CommentInput from "./CommentInput";
 
 interface CommentsSectionProps {
   postId: string;
@@ -12,11 +13,11 @@ interface CommentsSectionProps {
 
 export default function CommentSection({ postId }: CommentsSectionProps) {
   const [newComment, setNewComment] = useState("");
-
+  const [showAll, setShowAll] = useState(false);
   const { data, isLoading, refetch } = useGetCommentsByPostIdQuery(postId);
   const [createComment, { isLoading: isCreating }] = useCreateCommentMutation();
-  const [updateComment, { isLoading: isUpdating }] = useUpdateCommentMutation();
-  const [deleteComment, { isLoading: isDeleting }] = useDeleteCommentMutation();
+  const [updateComment] = useUpdateCommentMutation();
+  const [deleteComment] = useDeleteCommentMutation();
 
   const handleCreateComment = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -88,35 +89,33 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
   }
 
   const comments = data?.data || [];
-  const totalComments = comments.length;
+  const latestComment = comments[comments.length - 1];
+  const previousCount = comments.length - 1;
+  const visibleComments = showAll ? comments : latestComment ? [latestComment] : [];
 
   return (
     <div className=" pt-4">
-      <h3 className="text-lg font-semibold mb-3">
-        Comments ({totalComments})
-      </h3>
+      <CommentInput
+        newComment={newComment}
+        setNewComment={setNewComment}
+        handleCreateComment={handleCreateComment}
+        isCreating={isCreating}
+      />
 
-      {/* Add Comment Input */}
-      <div className="mb-4">
-        <textarea
-          placeholder="Write a comment... (Press Enter to submit)"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          onKeyDown={handleCreateComment}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-          rows={2}
-          disabled={isCreating}
-        />
-      </div>
+      {comments.length > 1 && (
+        <p
+          onClick={() => setShowAll(!showAll)}
+          className="mt-6 text-muted-foreground cursor-pointer"
+        >
+          {showAll
+            ? "Hide comments"
+            : `View all ${previousCount} previous comment${previousCount > 1 ? "s" : ""}`}
+        </p>
+      )}
 
-      {/* Comments List */}
       <div className="space-y-2">
-        {comments.length === 0 ? (
-          <p className="text-gray-500 text-sm text-center py-4">
-            No comments yet. Be the first to comment!
-          </p>
-        ) : (
-          comments.map((comment: any) => (
+        {visibleComments.length > 0 && (
+          visibleComments.map((comment: any) => (
             <Comment
               key={comment.id}
               comment={comment}

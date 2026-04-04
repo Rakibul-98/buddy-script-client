@@ -11,7 +11,6 @@ import PostMenu from "./PostMenu";
 import { useDeletePostMutation, useUpdatePostMutation } from "../../../../redux/features/post/postApi";
 import { timeAgo } from "../../../utils";
 import LikedUserGroup from "./LikedUserGroup";
-import { CgSmileMouthOpen } from "react-icons/cg";
 import { MdOutlineComment } from "react-icons/md";
 import { PiShareFat } from "react-icons/pi";
 
@@ -21,7 +20,7 @@ export default function PostCard({ post, refetch }: any) {
   const [updatePost] = useUpdatePostMutation();
   const [deletePost] = useDeletePostMutation();
 
-  const [toggleLike, { isLoading: isTogglingLike }] = useToggleLikeMutation();
+  const [toggleLike] = useToggleLikeMutation();
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post._count?.likes || 0);
 
@@ -41,11 +40,11 @@ export default function PostCard({ post, refetch }: any) {
 
       if (response.data?.liked) {
         setIsLiked(true);
-        setLikesCount(prev => prev + 1);
+        setLikesCount((prev: number) => prev + 1);
         toast.success("Post liked!");
       } else {
         setIsLiked(false);
-        setLikesCount(prev => prev - 1);
+        setLikesCount((prev: number) => prev - 1);
         toast.success("Post unliked!");
       }
     } catch (err: any) {
@@ -61,7 +60,7 @@ export default function PostCard({ post, refetch }: any) {
       toast.success("Deleted!");
       refetch();
     } catch (err: any) {
-      toast.error("Failed to delete");
+      toast.error(err || "Failed to delete");
     }
   };
 
@@ -156,8 +155,8 @@ export default function PostCard({ post, refetch }: any) {
       <div className="flex justify-between gap-6 pt-2 text-sm text-muted-foreground">
         <LikedUserGroup likesCount={likesCount} />
         <div className="flex items-center gap-3">
-          <span>{post._count.comments} {post._count.comments === 1 ? "comment" : "comments"}</span>
-          <span>122 Shares</span>
+          <span><span className="text-black">{post._count.comments}</span> {post._count.comments === 1 ? "comment" : "comments"}</span>
+          <span><span className="text-black">122</span> Shares</span>
         </div>
       </div>
 
@@ -170,7 +169,6 @@ export default function PostCard({ post, refetch }: any) {
         <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><MdOutlineComment size={25} /> Comment</button>
         <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><PiShareFat size={25} /> Share</button>
       </div>
-
       <CommentSection postId={post.id} />
     </div>
   );

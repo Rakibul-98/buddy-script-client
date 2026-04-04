@@ -11,6 +11,7 @@ import SuggestedPeople from "./LeftBar/SuggestedPeople";
 import Events from "./LeftBar/Events";
 import YourFriends from "./RightBar/YourFriends";
 import CreatePostSection from "./Feed/CreatePostSection";
+import StorySection from "./Feed/StorySection";
 
 export default function Feed() {
 
@@ -33,6 +34,7 @@ export default function Feed() {
           <Events />
         </div>
         <main className="col-span-2 space-y-4.5">
+          <StorySection />
           <CreatePostSection onPostCreated={refetch} />
 
           <div className="space-y-6">
