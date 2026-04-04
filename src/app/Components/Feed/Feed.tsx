@@ -12,6 +12,8 @@ import {
 } from "@/redux/features/post/postApi";
 import PostCard from "./Post/PostCard";
 import Navbar from "./Navbar/Navbar";
+import ExploreSection from "./LeftBar/ExploreSection";
+import FriendsSection from "./RightBar/FriendsSection";
 
 export default function Feed() {
   const [content, setContent] = useState("");
@@ -102,139 +104,82 @@ export default function Feed() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-
-      <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 lg:px-8">
-        {/* Create Post Form */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Create a Post</h2>
-          <form onSubmit={handleCreatePost} className="space-y-4">
-            <div>
-              <textarea
-                placeholder="What's on your mind?"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows={3}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-              />
-            </div>
-
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  value="PUBLIC"
-                  checked={visibility === "PUBLIC"}
-                  onChange={(e) => setVisibility(e.target.value as "PUBLIC")}
+      <div className="mx-auto max-w-7xl px-4 py-4.5 xl:px-0 grid grid-cols-4 gap-6">
+        <ExploreSection />
+        <main className="col-span-2">
+          {/* Create Post Form */}
+          <div className="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-4">Create a Post</h2>
+            <form onSubmit={handleCreatePost} className="space-y-4">
+              <div>
+                <textarea
+                  placeholder="What's on your mind?"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  rows={3}
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                 />
-                <span>Public</span>
-              </label>
-              <label className="flex items-center gap-2">
+              </div>
+
+              <div>
                 <input
-                  type="radio"
-                  value="PRIVATE"
-                  checked={visibility === "PRIVATE"}
-                  onChange={(e) => setVisibility(e.target.value as "PRIVATE")}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                 />
-                <span>Private</span>
-              </label>
-            </div>
+              </div>
 
-            <Button type="submit" disabled={isCreating}>
-              {isCreating ? "Creating..." : "Create Post"}
-            </Button>
-          </form>
-        </div>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value="PUBLIC"
+                    checked={visibility === "PUBLIC"}
+                    onChange={(e) => setVisibility(e.target.value as "PUBLIC")}
+                  />
+                  <span>Public</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value="PRIVATE"
+                    checked={visibility === "PRIVATE"}
+                    onChange={(e) => setVisibility(e.target.value as "PRIVATE")}
+                  />
+                  <span>Private</span>
+                </label>
+              </div>
 
-        {/* Posts Display */}
-        <div className="space-y-6">
-          <h2 className="text-xl font-semibold mb-4">All Posts</h2>
+              <Button type="submit" disabled={isCreating}>
+                {isCreating ? "Creating..." : "Create Post"}
+              </Button>
+            </form>
+          </div>
 
-          {posts.length === 0 ? (
-            <div className="bg-white rounded-lg shadow p-8 text-center">
-              <p className="text-gray-500">No posts yet. Be the first to create a post!</p>
-            </div>
-          ) : (
-            posts.map((post) => (
-              // <div key={post.id} className="bg-white rounded-lg shadow p-6">
-              //   {/* Post Header */}
-              //   <div className="flex justify-between items-start mb-4">
-              //     <div>
-              //       <div className="flex items-center gap-2">
-              //         <span className="font-semibold text-gray-900">
-              //           {post.author.firstName} {post.author.lastName}
-              //         </span>
-              //         <span className="text-xs text-gray-500">
-              //           {timeAgo(post.createdAt)}
-              //         </span>
-              //         <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
-              //           {post.visibility === "PUBLIC" ? "Public" : "Private"}
-              //         </span>
-              //       </div>
-              //     </div>
+          {/* Posts Display */}
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold mb-4">All Posts</h2>
 
-              //     {/* Delete Button (only show for post owner) */}
-              //     {user?.email === post.author.email && (
-              //       <Button
-              //         onClick={() => handleDeletePost(post.id)}
-              //         variant="outline"
-              //         size="sm"
-              //         disabled={isDeleting}
-              //         className="text-red-600 hover:bg-red-50"
-              //       >
-              //         Delete
-              //       </Button>
-              //     )}
-              //   </div>
-
-              //   {/* Post Content */}
-              //   <div className="mb-4">
-              //     <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
-              //   </div>
-
-              //   {/* Post Image */}
-              //   {post.imageUrl && (
-              //     <div className="mb-4">
-              //       <img
-              //         src={post.imageUrl}
-              //         alt="Post image"
-              //         className="rounded-lg max-h-96 w-full object-cover"
-              //       />
-              //     </div>
-              //   )}
-
-              //   {/* Post Stats */}
-              //   <div className="flex gap-6 pt-4 border-t text-sm text-gray-500">
-              //     <div className="flex items-center gap-1">
-              //       <span>❤️</span>
-              //       <span>{post._count.likes} likes</span>
-              //     </div>
-              //     <div className="flex items-center gap-1">
-              //       <span>💬</span>
-              //       <span>{post._count.comments} comments</span>
-              //     </div>
-              //   </div>
-              //   <CommentSection postId={post.id} />
-              // </div>
-              <PostCard
-                key={post.id}
-                post={post}
-                onEdit={handleEditPost}
-                onDelete={handleDeletePost}
-                isDeleting={isDeleting}
-              />
-            ))
-          )}
-        </div>
-      </main>
+            {posts.length === 0 ? (
+              <div className="bg-white rounded-lg shadow p-8 text-center">
+                <p className="text-gray-500">No posts yet. Be the first to create a post!</p>
+              </div>
+            ) : (
+              posts.map((post) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onEdit={handleEditPost}
+                  onDelete={handleDeletePost}
+                  isDeleting={isDeleting}
+                />
+              ))
+            )}
+          </div>
+        </main>
+        <FriendsSection />
+      </div>
     </div>
   );
 }
