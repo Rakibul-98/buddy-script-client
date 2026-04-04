@@ -17,6 +17,7 @@ import FriendsSection from "./RightBar/FriendsSection";
 import SuggestedPeople from "./LeftBar/SuggestedPeople";
 import Events from "./LeftBar/Events";
 import YourFriends from "./RightBar/YourFriends";
+import StorySection from "./Feed/StorySection";
 
 export default function Feed() {
   const [content, setContent] = useState("");
@@ -113,7 +114,8 @@ export default function Feed() {
           <SuggestedPeople />
           <Events />
         </div>
-        <main className="col-span-2">
+        <main className="col-span-2 space-y-4.5">
+          <StorySection />
           {/* Create Post Form */}
           <div className="bg-white rounded-md shadow p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Create a Post</h2>
