@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
   useGetPostsQuery,
-  useCreatePostMutation,
   useDeletePostMutation,
   useUpdatePostMutation,
 } from "@/redux/features/post/postApi";
@@ -17,46 +14,13 @@ import FriendsSection from "./RightBar/FriendsSection";
 import SuggestedPeople from "./LeftBar/SuggestedPeople";
 import Events from "./LeftBar/Events";
 import YourFriends from "./RightBar/YourFriends";
-import StorySection from "./Feed/StorySection";
+import CreatePostSection from "./Feed/CreatePostSection";
 
 export default function Feed() {
-  const [content, setContent] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [visibility, setVisibility] = useState<"PUBLIC" | "PRIVATE">("PUBLIC");
 
   const { data, isLoading, refetch } = useGetPostsQuery({ limit: 10 });
-  const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
   const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
-
   const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
-
-
-  const handleCreatePost = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!content.trim() && !imageFile) {
-      toast.error("Please add some content or an image");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("content", content);
-    formData.append("visibility", visibility);
-    if (imageFile) {
-      formData.append("image", imageFile);
-    }
-
-    try {
-      await createPost(formData).unwrap();
-      toast.success("Post created successfully!");
-      setContent("");
-      setImageFile(null);
-      setVisibility("PUBLIC");
-      refetch();
-    } catch (err: any) {
-      toast.error(err.data?.message || "Failed to create post");
-    }
-  };
 
   const handleEditPost = async (
     postId: string,
@@ -115,56 +79,8 @@ export default function Feed() {
           <Events />
         </div>
         <main className="col-span-2 space-y-4.5">
-          <StorySection />
-          {/* Create Post Form */}
-          <div className="bg-white rounded-md shadow p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Create a Post</h2>
-            <form onSubmit={handleCreatePost} className="space-y-4">
-              <div>
-                <textarea
-                  placeholder="What's on your mind?"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  rows={3}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-                />
-              </div>
-
-              <div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-                />
-              </div>
-
-              <div className="flex gap-4">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    value="PUBLIC"
-                    checked={visibility === "PUBLIC"}
-                    onChange={(e) => setVisibility(e.target.value as "PUBLIC")}
-                  />
-                  <span>Public</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    value="PRIVATE"
-                    checked={visibility === "PRIVATE"}
-                    onChange={(e) => setVisibility(e.target.value as "PRIVATE")}
-                  />
-                  <span>Private</span>
-                </label>
-              </div>
-
-              <Button type="submit" disabled={isCreating}>
-                {isCreating ? "Creating..." : "Create Post"}
-              </Button>
-            </form>
-          </div>
+          {/* <StorySection /> */}
+          <CreatePostSection onPostCreated={refetch} />
 
           {/* Posts Display */}
           <div className="space-y-6">
