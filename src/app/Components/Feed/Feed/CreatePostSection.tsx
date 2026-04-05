@@ -8,6 +8,7 @@ import { LuCalendarDays } from 'react-icons/lu';
 import { CiVideoOn } from 'react-icons/ci';
 import { IoImageOutline } from 'react-icons/io5';
 import { PiPaperPlaneTilt } from 'react-icons/pi';
+import { FiEdit3 } from 'react-icons/fi';
 
 interface CreatePostSectionProps {
   onPostCreated: () => void;
@@ -18,6 +19,8 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
   const [content, setContent] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
+  const [isFocused, setIsFocused] = useState(false);
+
 
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,19 +78,28 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
             width={37}
             priority
           />
-          <textarea
-            placeholder="Write Something ..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={3}
-            className="w-full py-2 focus:border-indigo-500 focus:outline-none"
-          />
+          <div className="relative w-full">
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              rows={3}
+              className="w-full py-2 focus:border-indigo-500 focus:outline-none"
+            />
+
+            <div
+              className={`absolute left-1 top-2 flex items-center gap-1 text-gray-400 transition-all duration-200 pointer-events-none ${isFocused || content ? '-translate-y-5 text-xs opacity-0' : 'translate-y-0 opacity-100'}`}
+            >
+              <span>Write Something ...</span>
+              <FiEdit3 />
+            </div>
+          </div>
         </div>
         <div className="flex items-center justify-between bg-[#f3f9ff] px-4 py-2 rounded-sm">
 
-          <div className="flex items-center gap-6 text-muted-foreground">
+          <div className="flex items-center gap-3 lg:gap-6 text-muted-foreground">
 
-            {/* IMAGE UPLOAD (functional) */}
             <label className="cursor-pointer hover:text-[#1890FF]">
               <input
                 type="file"
@@ -97,19 +109,22 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
               />
               <span>
                 {imageFile ? imageFile.name :
-                  <span className='flex items-center gap-2'><IoImageOutline size={20} />Photo</span>
+                  <span className='flex items-center gap-2'><IoImageOutline size={20} />
+                    <span className='hidden lg:block'>Photo</span>
+                  </span>
                 }
               </span>
             </label>
             {
               fakeButtons.map(btn =>
-                <span key={btn.id} className='flex items-center gap-2 cursor-pointer hover:text-[#1890FF]'><btn.icon size={20} />{btn.title}</span>
+                <span key={btn.id} className='flex items-center gap-2 cursor-pointer hover:text-[#1890FF]'><btn.icon size={20} />
+                  <span className='hidden lg:block'>{btn.title}</span>
+                </span>
               )
             }
           </div>
 
-          {/* POST BUTTON (moved right) */}
-          <button className="py-3 px-5.5 text-white bg-[#1890FF] rounded-sm flex gap-2 items-center" type="submit" disabled={isCreating}>
+          <button className="py-2 lg:py-3 px-5.5 text-white bg-[#1890FF] rounded-sm flex gap-2 items-center" type="submit" disabled={isCreating}>
             <PiPaperPlaneTilt />
             {isCreating ? "Posting..." : "Post"}
           </button>
