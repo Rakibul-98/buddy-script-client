@@ -70,7 +70,7 @@ export default function Navbar() {
 
           {/* Mobile Search Icon */}
           <div className="flex sm:hidden">
-            <SearchIcon className="hover:cursor-pointer" size={24} />
+            <SearchIcon className="hover:cursor-pointer text-muted-foreground" size={18} />
           </div>
 
           {/* Tablet Menu Button */}

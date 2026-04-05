@@ -27,8 +27,8 @@ export default function Feed() {
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
       <Navbar />
-      <div className="mx-auto max-w-7xl px-4 py-4.5 xl:px-0 grid grid-cols-4 gap-6">
-        <div className="space-y-4.5">
+      <div className="mx-auto px-4 py-4.5 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="hidden space-y-4.5">
           <ExploreSection />
           <SuggestedPeople />
           <Events />
@@ -53,7 +53,7 @@ export default function Feed() {
             )}
           </div>
         </main>
-        <div className="space-y-4.5">
+        <div className="hidden space-y-4.5">
           <FriendsSection />
           <YourFriends />
         </div>

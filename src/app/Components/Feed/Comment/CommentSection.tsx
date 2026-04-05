@@ -105,11 +105,11 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
       {comments.length > 1 && (
         <p
           onClick={() => setShowAll(!showAll)}
-          className="mt-6 text-muted-foreground cursor-pointer"
+          className="mt-6 text-muted-foreground cursor-pointer font-semibold"
         >
           {showAll
             ? "Hide comments"
-            : `View all ${previousCount} previous comment${previousCount > 1 ? "s" : ""}`}
+            : `View ${previousCount} previous comment${previousCount > 1 ? "s" : ""}`}
         </p>
       )}
 
