@@ -10,7 +10,7 @@ export const postApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["Posts"],
+      providesTags: ["Posts", "Comments"],
     }),
 
     getPostById: builder.query<{ success: boolean; data: Post }, string>({
@@ -18,7 +18,7 @@ export const postApi = baseApi.injectEndpoints({
         url: `/posts/${id}`,
         method: "GET",
       }),
-      providesTags: (result, error, id) => [{ type: "Posts", id }],
+      providesTags: ["Posts", "Comments"],
     }),
 
     createPost: builder.mutation<{ success: boolean; data: Post }, FormData>({
@@ -27,7 +27,7 @@ export const postApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: ["Posts", "Comments"],
     }),
 
     // Update an existing post
@@ -40,10 +40,7 @@ export const postApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        "Posts",
-        { type: "Posts", id },
-      ],
+      invalidatesTags: ["Posts", "Comments"],
     }),
 
     deletePost: builder.mutation<{ success: boolean; message: string }, string>(
@@ -52,7 +49,7 @@ export const postApi = baseApi.injectEndpoints({
           url: `/posts/${id}`,
           method: "DELETE",
         }),
-        invalidatesTags: ["Posts"],
+        invalidatesTags: ["Posts", "Comments"],
       },
     ),
   }),

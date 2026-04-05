@@ -17,6 +17,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Posts", "Comments", "User"],
     }),
     googleLogin: builder.mutation<AuthResponse, { token: string }>({
       query: (data) => ({
@@ -24,6 +25,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Posts", "Comments", "User"],
     }),
   }),
 });

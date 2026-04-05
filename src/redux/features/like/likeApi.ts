@@ -12,7 +12,7 @@ export const likeApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: ["Posts", "Comments", "User"],
     }),
   }),
 });
