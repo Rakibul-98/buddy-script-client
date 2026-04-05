@@ -119,8 +119,8 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
                 onChange={(e) => setImageFile(e.target.files?.[0] || null)}
               />
               <span>
-                {imageFile ? imageFile.name :
-                  <span className='flex items-center gap-2'><IoImageOutline size={20} />
+                {imageFile ? <p className='max-w-20 overflow-hidden text-ellipsis whitespace-nowrap'>{imageFile.name}</p> :
+                  <span className='flex items-center gap-2 '><IoImageOutline size={20} />
                     <span className='hidden md:block'>Photo</span>
                   </span>
                 }
@@ -135,7 +135,7 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
             }
           </div>
 
-          <button className="py-2 lg:py-3 px-5.5 text-white bg-[#1890FF] rounded-sm flex gap-2 justify-center items-center lg:w-full xl:w-auto" type="submit" disabled={isCreating}>
+          <button className="py-2 lg:py-3 px-5.5 text-white bg-[#1890FF] rounded-sm flex gap-2 justify-center items-center lg:w-full xl:w-auto cursor-pointer" type="submit" disabled={isCreating}>
             <PiPaperPlaneTilt />
             {isCreating ? "Posting..." : "Post"}
           </button>

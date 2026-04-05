@@ -55,7 +55,7 @@ export default function PostCard({ post, refetch }: any) {
   const handleDelete = async () => {
     try {
       await deletePost(post.id).unwrap();
-      toast.success("Deleted!");
+      toast.success("Post Deleted Successfully!");
       refetch();
     } catch (err: any) {
       toast.error(err.data?.message || "Failed to delete");
@@ -72,10 +72,10 @@ export default function PostCard({ post, refetch }: any) {
         data: { visibility: newVisibility },
       }).unwrap();
 
-      toast.success("Updated!");
+      toast.success("Post visibility updated!");
       refetch();
     } catch {
-      toast.error("Failed");
+      toast.error("Failed to update post visibility");
     }
   };
 

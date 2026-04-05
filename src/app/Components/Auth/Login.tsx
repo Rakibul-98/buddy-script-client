@@ -28,12 +28,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<LoginFormData>({
-    defaultValues: {
-      email: 'rakibul@test2.com',
-      password: '123456',
-    }
-  });
+  } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
     try {

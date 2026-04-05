@@ -13,9 +13,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { IoImageOutline } from "react-icons/io5";
 import { PiPaperPlaneTilt } from "react-icons/pi";
-import { FiEdit, FiEdit3 } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { useUpdatePostMutation } from "../../../../redux/features/post/postApi";
 
 interface EditPostDialogProps {
@@ -32,15 +31,12 @@ interface FormData {
 }
 
 export default function EditPostDialog({ post }: EditPostDialogProps) {
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [existingImage, setExistingImage] = useState<string | null>(post.imageUrl || null);
   const [isOpen, setIsOpen] = useState(false);
   const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
 
   const {
     register,
-    handleSubmit,
-    reset,
+    handleSubmit
   } = useForm<FormData>({
     defaultValues: {
       content: post.content || "",
@@ -48,8 +44,8 @@ export default function EditPostDialog({ post }: EditPostDialogProps) {
   });
 
   const onSubmit = async (data: FormData) => {
-    if (!data.content.trim() && !imageFile && !existingImage) {
-      toast.error("Please add some content or an image");
+    if (!data.content.trim()) {
+      toast.error("Please add some content to update the post");
       return;
     }
 
@@ -66,8 +62,6 @@ export default function EditPostDialog({ post }: EditPostDialogProps) {
 
       toast.success("Post updated successfully!");
       setIsOpen(false);
-      reset();
-      setImageFile(null);
     } catch (err: any) {
       toast.error(err.data?.message || "Failed to update post");
     }
@@ -85,7 +79,7 @@ export default function EditPostDialog({ post }: EditPostDialogProps) {
           </p>
         </div>
       </DialogTrigger>
-      <DialogContent className="p-5">
+      <DialogContent className="p-5" onKeyDown={(e) => e.stopPropagation()}>
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Update your post</DialogTitle>
         </DialogHeader>
@@ -103,19 +97,16 @@ export default function EditPostDialog({ post }: EditPostDialogProps) {
               />
               <div className="relative w-full">
                 <textarea
-                  {...register("content", {
-                    required: "Content is required",
-                  })}
-                  rows={2}
-                  className="w-full pt-2 resize-none focus:outline-none  bg-[#f5f5f5] shadow-none px-3 rounded-xl text-base"
+                  {...register("content")}
+                  className="w-full pt-2 resize-none focus:outline-none  bg-[#f5f5f5] shadow-none px-3 rounded-xl"
                 />
               </div>
             </div>
 
-            {(existingImage || imageFile) && (
+            {(post.imageUrl) && (
               <div className="relative rounded-md overflow-hidden">
                 <Image
-                  src={imageFile ? URL.createObjectURL(imageFile) : existingImage!}
+                  src={post.imageUrl!}
                   alt="Preview"
                   width={600}
                   height={400}
