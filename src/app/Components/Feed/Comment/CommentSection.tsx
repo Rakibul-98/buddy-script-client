@@ -17,7 +17,7 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
   const { data, isLoading, refetch } = useGetCommentsByPostIdQuery(postId);
   const [createComment, { isLoading: isCreating }] = useCreateCommentMutation();
   const [updateComment] = useUpdateCommentMutation();
-  const [deleteComment] = useDeleteCommentMutation();
+  const [deleteComment, { isLoading: isDeleting }] = useDeleteCommentMutation();
 
   const handleCreateComment = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -89,7 +89,7 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
   }
 
   const comments = data?.data || [];
-  const latestComment = comments[comments.length - 1];
+  const latestComment = comments[0];
   const previousCount = comments.length - 1;
   const visibleComments = showAll ? comments : latestComment ? [latestComment] : [];
 
@@ -123,6 +123,7 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
               onReply={handleReply}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              isDeleting={isDeleting}
             />
           ))
         )}

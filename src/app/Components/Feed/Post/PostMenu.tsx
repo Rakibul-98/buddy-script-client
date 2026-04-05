@@ -4,14 +4,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../../..
 import { CiBookmark } from "react-icons/ci";
 import { BiBell } from "react-icons/bi";
 import { AiOutlineCloseSquare } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 import { LuTrash2 } from "react-icons/lu";
+import EditPostDialog from "./EditPostDialog";
 
 export default function PostMenu({
-  onEdit,
   onDelete,
+  isDeleting,
   onToggleVisibility,
   isPrivate,
+  post
 }: any) {
 
   const menuItems = [
@@ -22,8 +24,6 @@ export default function PostMenu({
       label: isPrivate ? "Show Post" : "Hide Post",
       action: onToggleVisibility,
     },
-    { icon: FiEdit, label: "Edit Post", action: onEdit },
-    { icon: LuTrash2, label: "Delete Post", action: onDelete },
   ];
 
   return (
@@ -50,6 +50,20 @@ export default function PostMenu({
             </div>
           </div>
         ))}
+        <EditPostDialog post={post} />
+        <br />
+        <ConfirmDeleteDialog item={"Post"} button={<div
+          className="cursor-pointer px-0 py-2 focus:bg-transparent"
+        >
+          <div className={`flex items-center justify-between w-full text-muted-foreground hover:text-[#1890FF] transition-colors duration-200`}>
+            <p className="flex items-center gap-3 text-base">
+              <span className="bg-[#ebf2ff] p-2.75 rounded-full">
+                <LuTrash2 size={21} className="text-[#1890FF]" />
+              </span>
+              Delete Post
+            </p>
+          </div>
+        </div>} isDeleting={isDeleting} handleDelete={onDelete} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

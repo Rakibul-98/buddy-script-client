@@ -58,11 +58,11 @@ export default function StorySection() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="flex gap-2 lg:gap-6 overflow-hidden px-2">
+      <div className="flex gap-2 lg:gap-6 overflow-hidden">
         {stories.map((story) => (
           <div key={story.id} className="shrink-0 flex flex-col items-center">
             <div
-              className={`relative w-15 h-15 lg:w-34.25 lg:h-37 rounded-full lg:rounded-sm overflow-hidden cursor-pointer ${!story.isOwn && "group"
+              className={`relative w-15 h-15 lg:w-34.75 lg:h-37 rounded-full lg:rounded-sm overflow-hidden cursor-pointer ${!story.isOwn && "group"
                 }`}
             >
               <Image

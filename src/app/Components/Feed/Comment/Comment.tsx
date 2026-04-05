@@ -10,6 +10,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import CommentInput from "./CommentInput";
 import CommentActions from "./CommentActions";
 import { Edit, Trash } from "lucide-react";
+import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
 
 
 interface CommentProps {
@@ -18,6 +19,7 @@ interface CommentProps {
   onReply: (postId: string, content: string, parentId: string) => void;
   onEdit: (commentId: string, content: string) => void;
   onDelete: (commentId: string) => void;
+  isDeleting?: boolean;
   level?: number;
 }
 
@@ -27,6 +29,7 @@ export default function Comment({
   onReply,
   onEdit,
   onDelete,
+  isDeleting,
   level = 0
 }: CommentProps) {
   const { user } = useAppSelector((state) => state.auth);
@@ -64,14 +67,12 @@ export default function Comment({
   };
 
   const handleDelete = () => {
-    if (confirm("Are you sure you want to delete this comment?")) {
-      onDelete(comment.id);
-    }
+    onDelete(comment.id);
   };
 
   const replies = comment.replies || [];
 
-  const latestReply = replies[replies.length - 1];
+  const latestReply = replies[0];
   const previousReplyCount = replies.length - 1;
 
   const visibleReplies = showAllReplies
@@ -112,15 +113,13 @@ export default function Comment({
                 >
                   <Edit size={15} />
                 </button>
-                <button
-                  onClick={handleDelete}
-                  className="hover:text-red-500 cursor-pointer"
-                >
+                <ConfirmDeleteDialog item={"Comment"} button={
                   <Trash size={15} />
-                </button>
+                } isDeleting={isDeleting} handleDelete={handleDelete} />
               </div>
             )}
           </div>
+
 
           {isEditing ? (
             <CommentInput

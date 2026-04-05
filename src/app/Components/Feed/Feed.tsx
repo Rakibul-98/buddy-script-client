@@ -10,7 +10,7 @@ import FriendsSection from "./RightBar/FriendsSection";
 import SuggestedPeople from "./LeftBar/SuggestedPeople";
 import Events from "./LeftBar/Events";
 import YourFriends from "./RightBar/YourFriends";
-import CreatePostSection from "./Feed/CreatePostSection";
+import CreatePostSection from "./Post/CreatePostSection";
 import StorySection from "./Feed/StorySection";
 
 export default function Feed() {

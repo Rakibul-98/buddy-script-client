@@ -18,7 +18,7 @@ export default function PostCard({ post, refetch }: any) {
   const { user } = useAppSelector((state) => state.auth);
 
   const [updatePost] = useUpdatePostMutation();
-  const [deletePost] = useDeletePostMutation();
+  const [deletePost, { isLoading: isDeleting }] = useDeletePostMutation();
 
   const [toggleLike] = useToggleLikeMutation();
   const [isLiked, setIsLiked] = useState(false);
@@ -53,14 +53,12 @@ export default function PostCard({ post, refetch }: any) {
   };
 
   const handleDelete = async () => {
-    if (!confirm("Delete this post?")) return;
-
     try {
       await deletePost(post.id).unwrap();
       toast.success("Deleted!");
       refetch();
     } catch (err: any) {
-      toast.error(err || "Failed to delete");
+      toast.error(err.data?.message || "Failed to delete");
     }
   };
 
@@ -72,23 +70,6 @@ export default function PostCard({ post, refetch }: any) {
       await updatePost({
         id: post.id,
         data: { visibility: newVisibility },
-      }).unwrap();
-
-      toast.success("Updated!");
-      refetch();
-    } catch {
-      toast.error("Failed");
-    }
-  };
-
-  const handleEdit = async () => {
-    const newContent = prompt("Edit post", post.content);
-    if (!newContent) return;
-
-    try {
-      await updatePost({
-        id: post.id,
-        data: { content: newContent },
       }).unwrap();
 
       toast.success("Updated!");
@@ -127,8 +108,11 @@ export default function PostCard({ post, refetch }: any) {
           </div>
           {user?.email === post.author.email && (
             <PostMenu
-              onEdit={handleEdit}
+              // onEdit={handleEdit}
+              post={post}
+              refetch={refetch}
               onDelete={handleDelete}
+              isDeleting={isDeleting}
               onToggleVisibility={handleToggleVisibility}
               isPrivate={post.visibility === "PRIVATE"}
             />

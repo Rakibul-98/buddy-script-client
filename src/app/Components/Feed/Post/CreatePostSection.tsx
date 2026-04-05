@@ -2,6 +2,7 @@
 import { toast } from 'sonner';
 import { useCreatePostMutation } from '../../../../redux/features/post/postApi';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { RiArticleLine } from 'react-icons/ri';
 import { LuCalendarDays } from 'react-icons/lu';
@@ -14,24 +15,36 @@ interface CreatePostSectionProps {
   onPostCreated: () => void;
 }
 
-export default function CreatePostSection({ onPostCreated }: CreatePostSectionProps) {
+interface FormData {
+  content: string;
+}
 
-  const [content, setContent] = useState("");
+export default function CreatePostSection({ onPostCreated }: CreatePostSectionProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
   const [isFocused, setIsFocused] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm<FormData>({
+    defaultValues: {
+      content: ""
+    }
+  });
 
-  const handleCreatePost = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const content = watch("content");
 
-    if (!content.trim() && !imageFile) {
+  const onSubmit = async (data: FormData) => {
+    if (!data.content.trim() && !imageFile) {
       toast.error("Please add some content or an image");
       return;
     }
 
     const formData = new FormData();
-    formData.append("content", content);
+    formData.append("content", data.content);
     formData.append("visibility", "PUBLIC");
     if (imageFile) {
       formData.append("image", imageFile);
@@ -40,7 +53,7 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
     try {
       await createPost(formData).unwrap();
       toast.success("Post created successfully!");
-      setContent("");
+      reset();
       setImageFile(null);
       onPostCreated();
     } catch (err: any) {
@@ -64,12 +77,11 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
       icon: RiArticleLine,
       title: "Article"
     },
-  ]
-
+  ];
 
   return (
     <div className="bg-white rounded-md p-6">
-      <form onSubmit={handleCreatePost} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className='flex items-start gap-2'>
           <Image
             src="/assets/txt_img.png"
@@ -80,23 +92,22 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
           />
           <div className="relative w-full">
             <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              {...register("content")}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               rows={3}
-              className="w-full pt-2 focus:border-indigo-500 focus:outline-none"
+              className="w-full pt-2 focus:border-indigo-500 focus:outline-none resize-none"
             />
 
             <div
-              className={`absolute left-1 top-2 flex items-center gap-1 text-gray-400 transition-all duration-200 pointer-events-none ${isFocused || content ? '-translate-y-5 text-xs opacity-0' : 'translate-y-0 opacity-100'}`}
+              className={`absolute left-1 top-2 flex items-center gap-1 text-gray-400 transition-all duration-500 pointer-events-none ${isFocused || content ? '-translate-y-5 text-xs opacity-0' : 'translate-y-0 opacity-100'}`}
             >
               <span>Write Something ...</span>
               <FiEdit3 />
             </div>
           </div>
         </div>
-        <div className="flex px-2 lg:flex-col xl:flex-row items-center lg:items-start justify-between bg-[#f3f9ff]  py-2 rounded-sm">
+        <div className="flex px-2 lg:flex-col xl:flex-row items-center lg:items-start justify-between bg-[#f3f9ff] py-2 rounded-sm">
 
           <div className="w-full flex lg:justify-between xl:justify-start items-center gap-3 lg:gap-6 text-muted-foreground py-2 lg:py-3 px-4">
 
@@ -129,8 +140,7 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
             {isCreating ? "Posting..." : "Post"}
           </button>
         </div>
-
       </form>
     </div>
-  )
+  );
 }
