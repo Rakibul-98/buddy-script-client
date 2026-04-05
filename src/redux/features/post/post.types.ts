@@ -20,5 +20,8 @@ export interface Post {
 export interface PostResponse {
   success: boolean;
   message: string;
-  data: Post[];
+  data: {
+    data: Post[];
+    nextCursor: string | null;
+  };
 }

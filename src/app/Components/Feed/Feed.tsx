@@ -12,23 +12,46 @@ import Events from "./LeftBar/Events";
 import YourFriends from "./RightBar/YourFriends";
 import CreatePostSection from "./Post/CreatePostSection";
 import StorySection from "./Feed/StorySection";
-import FeedSkeleton from "./FeedSkeleton";
+import { useEffect, useRef, useState } from "react";
+import PostSkeleton from "./Post/PostSkeleton";
+
 
 export default function Feed() {
 
-  const { data, isLoading, refetch } = useGetPostsQuery({ limit: 10 });
+  const [cursor, setCursor] = useState<string | null>(null);
+  const { data, isLoading, refetch, isFetching } = useGetPostsQuery({ limit: 3, cursor });
 
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
-  if (isLoading) {
-    return <FeedSkeleton />;
-  }
+  useEffect(() => {
+    const container = document.querySelector("main");
+
+    if (!observerRef.current || !container) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && data?.nextCursor) {
+          setCursor(data.nextCursor);
+        }
+      },
+      {
+        root: container,
+        threshold: 0.1,
+        rootMargin: "100px",
+      }
+    );
+
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [data?.nextCursor]);
 
   const posts = data?.data || [];
 
   return (
     <div className="h-screen flex flex-col bg-[#f5f5f5] overflow-hidden">
       <Navbar />
-      <div className="flex-1 mx-auto max-w-lg md:max-w-2xl lg:max-w-7xl px-4 pt-4.5 pb-4.5 lg:pb-2 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6 overflow-hidden">
+      <div className="flex-1 mx-auto max-w-lg md:max-w-2xl lg:max-w-7xl px-4 pt-4.5 pb-4.5 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6 overflow-hidden">
         <div className="hidden lg:block space-y-4.5 overflow-y-auto">
           <ExploreSection />
           <SuggestedPeople />
@@ -39,7 +62,12 @@ export default function Feed() {
           <CreatePostSection onPostCreated={refetch} />
 
           <div className="space-y-6">
-            {posts.length === 0 ? (
+            {
+              isLoading && (
+                <PostSkeleton />
+              )
+            }
+            {posts.length === 0 && !isLoading ? (
               <div className="bg-white rounded-lg p-8 text-center">
                 <p className="text-gray-500">No posts yet. Be the first to create a post!</p>
               </div>
@@ -49,9 +77,12 @@ export default function Feed() {
                   key={post.id}
                   post={post}
                   refetch={refetch}
+                  isFetching={isFetching}
                 />
               ))
             )}
+            <div ref={observerRef} className="h-10 w-full" />
+            {isFetching && posts.length > 0 && <PostSkeleton />}
           </div>
         </main>
         <div className="hidden lg:block space-y-4.5 overflow-y-auto">
