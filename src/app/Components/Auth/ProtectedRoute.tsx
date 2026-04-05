@@ -19,14 +19,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }, [user, accessToken, router]);
 
   if (!user || !accessToken) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent mx-auto"></div>
-          <p className="mt-2 text-sm text-gray-600">Redirecting to login...</p>
-        </div>
-      </div>
-    );
+    return;
   }
 
   return <>{children}</>;

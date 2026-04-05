@@ -10,7 +10,7 @@ export default function AuthButton({ isLoading, loadingText, buttonText }: AuthB
       <button
         type="submit"
         disabled={isLoading}
-        className="w-49 lg:w-full rounded-sm bg-[#1890FF] px-4 py-3 text-white hover:bg-[#1890FF]/95 hover:shadow-lg focus:outline-none"
+        className="w-49 lg:w-full rounded-sm bg-[#1890FF] px-4 py-3 text-white hover:bg-[#1890FF]/95 hover:shadow-lg focus:outline-none cursor-pointer"
       >
         {isLoading ? loadingText : buttonText}
       </button>

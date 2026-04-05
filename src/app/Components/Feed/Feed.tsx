@@ -12,6 +12,7 @@ import Events from "./LeftBar/Events";
 import YourFriends from "./RightBar/YourFriends";
 import CreatePostSection from "./Post/CreatePostSection";
 import StorySection from "./Feed/StorySection";
+import FeedSkeleton from "./FeedSkeleton";
 
 export default function Feed() {
 
@@ -19,7 +20,7 @@ export default function Feed() {
 
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <FeedSkeleton />;
   }
 
   const posts = data?.data || [];

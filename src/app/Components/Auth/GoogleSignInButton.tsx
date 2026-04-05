@@ -64,7 +64,7 @@ export default function GoogleSignInButton({
         className={`
         flex items-center justify-center gap-2 
         w-72 px-4 py-2 
-        border border-[#F5F5F5] rounded-sm
+        border border-[#F5F5F5] rounded-sm cursor-pointer
         hover:shadow
         ${className}
       `}
@@ -75,7 +75,7 @@ export default function GoogleSignInButton({
           width={20}
           height={20}
         />
-        <span>{isLoading ? "Please wait..." : displayText}</span>
+        <span>{isLoading ? "Authenticating... keep patient!" : displayText}</span>
       </button>
     </div>
   );

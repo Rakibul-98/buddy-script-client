@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useCreateCommentMutation, useDeleteCommentMutation, useGetCommentsByPostIdQuery, useUpdateCommentMutation } from "../../../../redux/features/comment/commentApi";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
+import { Skeleton } from "../../../../components/ui/skeleton";
 
 interface CommentsSectionProps {
   postId: string;
@@ -80,11 +81,12 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
 
   if (isLoading) {
     return (
-      <div className="mt-4 pt-4 border-t">
-        <div className="flex justify-center py-4">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent"></div>
-        </div>
-      </div>
+      <Skeleton className="mt-3 bg-gray-100 w-full rounded-2xl p-3 flex items-center gap-5">
+        <Skeleton className="bg-gray-300 h-7 w-8 rounded-full" />
+        <Skeleton className="bg-gray-300 h-6 w-10/12 rounded-2xl" />
+        <div className="flex gap-1"><Skeleton className="bg-gray-300 h-6 w-6 rounded-4xl" />
+          <Skeleton className="bg-gray-300 h-6 w-6 rounded-4xl" /></div>
+      </Skeleton>
     );
   }
 
