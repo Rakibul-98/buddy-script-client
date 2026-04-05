@@ -81,7 +81,7 @@ export default function Comment({
       : [];
 
   return (
-    <div className={`${level > 0 ? 'ml-14 mt-3' : 'mt-4'}`}>
+    <div className={`${level > 0 ? 'ml-14 mt-3' : 'mt-6'}`}>
 
       <div className="relative flex items-start gap-3">
         <Image
@@ -92,7 +92,6 @@ export default function Comment({
           priority
         />
         <div className="w-full bg-[#f6f6f6] rounded-2xl p-3">
-          {/* Comment Header */}
           <div className="flex justify-between items-start mb-1">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="font-semibold text-sm text-gray-900">
@@ -105,7 +104,6 @@ export default function Comment({
               )}
             </div>
 
-            {/* Comment Actions */}
             {user?.email === comment.author.email && (
               <div className="flex gap-2 text-xs">
                 <button
@@ -144,7 +142,7 @@ export default function Comment({
       <CommentActions user={user} isEditing={isEditing} setIsReplying={setIsReplying} isReplying={isReplying} comment={comment} />
 
       {isReplying && (
-        <div className="mt-2 ml-8">
+        <div className="mt-2 ml-12">
           <CommentInput
             newComment={replyContent}
             setNewComment={setReplyContent}

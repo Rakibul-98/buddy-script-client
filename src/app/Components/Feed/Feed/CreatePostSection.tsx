@@ -85,7 +85,7 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               rows={3}
-              className="w-full py-2 focus:border-indigo-500 focus:outline-none"
+              className="w-full pt-2 focus:border-indigo-500 focus:outline-none"
             />
 
             <div
@@ -96,9 +96,9 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between bg-[#f3f9ff] px-4 py-2 rounded-sm">
+        <div className="flex px-2 lg:flex-col xl:flex-row items-center lg:items-start justify-between bg-[#f3f9ff]  py-2 rounded-sm">
 
-          <div className="flex items-center gap-3 lg:gap-6 text-muted-foreground">
+          <div className="w-full flex lg:justify-between xl:justify-start items-center gap-3 lg:gap-6 text-muted-foreground py-2 lg:py-3 px-4">
 
             <label className="cursor-pointer hover:text-[#1890FF]">
               <input
@@ -110,7 +110,7 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
               <span>
                 {imageFile ? imageFile.name :
                   <span className='flex items-center gap-2'><IoImageOutline size={20} />
-                    <span className='hidden lg:block'>Photo</span>
+                    <span className='hidden md:block'>Photo</span>
                   </span>
                 }
               </span>
@@ -118,13 +118,13 @@ export default function CreatePostSection({ onPostCreated }: CreatePostSectionPr
             {
               fakeButtons.map(btn =>
                 <span key={btn.id} className='flex items-center gap-2 cursor-pointer hover:text-[#1890FF]'><btn.icon size={20} />
-                  <span className='hidden lg:block'>{btn.title}</span>
+                  <span className='hidden md:block'>{btn.title}</span>
                 </span>
               )
             }
           </div>
 
-          <button className="py-2 lg:py-3 px-5.5 text-white bg-[#1890FF] rounded-sm flex gap-2 items-center" type="submit" disabled={isCreating}>
+          <button className="py-2 lg:py-3 px-5.5 text-white bg-[#1890FF] rounded-sm flex gap-2 justify-center items-center lg:w-full xl:w-auto" type="submit" disabled={isCreating}>
             <PiPaperPlaneTilt />
             {isCreating ? "Posting..." : "Post"}
           </button>

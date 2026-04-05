@@ -25,15 +25,15 @@ export default function Feed() {
   const posts = data?.data || [];
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5]">
+    <div className="min-h-screen bg-[#f5f5f5] overflow-hidden">
       <Navbar />
-      <div className="mx-auto px-4 py-4.5 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="hidden space-y-4.5">
+      <div className="mx-auto max-w-lg md:max-w-2xl lg:max-w-7xl px-4 py-4.5 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="hidden lg:block space-y-4.5">
           <ExploreSection />
           <SuggestedPeople />
           <Events />
         </div>
-        <main className="col-span-2 space-y-4.5">
+        <main className="col-span-2 space-y-4.5 pb-16 sm:pb-0">
           <StorySection />
           <CreatePostSection onPostCreated={refetch} />
 
@@ -53,7 +53,7 @@ export default function Feed() {
             )}
           </div>
         </main>
-        <div className="hidden space-y-4.5">
+        <div className="hidden lg:block space-y-4.5">
           <FriendsSection />
           <YourFriends />
         </div>

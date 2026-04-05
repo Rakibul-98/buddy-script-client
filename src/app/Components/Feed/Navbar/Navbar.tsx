@@ -33,7 +33,7 @@ export default function Navbar() {
   return (
     <div>
       <header className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-5 lg:py-0 xl:px-0 flex justify-between items-center gap-3">
+        <div className="mx-auto max-w-7xl px-4 py-4.25 lg:py-0 xl:px-0 flex justify-between items-center gap-3">
           {/* Logo */}
           <div className="relative w-35 h-7.5">
             <Link href="/">
