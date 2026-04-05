@@ -22,7 +22,7 @@ export default function AuthCard({
   showGoogleButton = true,
 }: AuthCardProps) {
   return (
-    <div className="w-full lg:w-100 mx-auto lg:mx-0 bg-white z-50 p-12 rounded-sm">
+    <div className="w-full lg:w-102 mx-auto lg:mx-0 bg-white z-50 p-12 rounded-sm">
       <div className="mb-12.5">
         <div className="relative w-40 h-10 mx-auto mb-7">
           <Image
