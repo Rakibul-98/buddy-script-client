@@ -18,7 +18,6 @@ export const postApi = baseApi.injectEndpoints({
       }),
 
       transformResponse: (response: PostResponse) => {
-        console.log("RAW API:", response);
         return {
           data: response?.data?.data || [],
           nextCursor: response?.data?.nextCursor || null,
@@ -63,7 +62,19 @@ export const postApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Posts", "Comments"],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            postApi.util.updateQueryData("getPosts", undefined, (draft) => {
+              if (!draft?.data) return;
+
+              draft.data.unshift(data.data);
+            }),
+          );
+        } catch {}
+      },
     }),
 
     updatePost: builder.mutation<
@@ -75,7 +86,20 @@ export const postApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["Posts", "Comments"],
+      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            postApi.util.updateQueryData("getPosts", undefined, (draft) => {
+              const index = draft.data.findIndex((p) => p.id === id);
+              if (index !== -1) {
+                draft.data[index] = data.data;
+              }
+            }),
+          );
+        } catch {}
+      },
     }),
 
     deletePost: builder.mutation<{ success: boolean; message: string }, string>(
@@ -84,7 +108,17 @@ export const postApi = baseApi.injectEndpoints({
           url: `/posts/${id}`,
           method: "DELETE",
         }),
-        invalidatesTags: ["Posts", "Comments"],
+        async onQueryStarted(id, { dispatch, queryFulfilled }) {
+          try {
+            await queryFulfilled;
+
+            dispatch(
+              postApi.util.updateQueryData("getPosts", undefined, (draft) => {
+                draft.data = draft.data.filter((p) => p.id !== id);
+              }),
+            );
+          } catch {}
+        },
       },
     ),
   }),
