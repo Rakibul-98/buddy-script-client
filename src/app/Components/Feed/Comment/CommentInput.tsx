@@ -5,7 +5,7 @@ import { PiMicrophone } from "react-icons/pi";
 
 export default function CommentInput({ newComment, setNewComment, handleCreateComment, isCreating }: any) {
   return (
-    <div className="mb-4 flex items-center bg-[#f6f6f6] px-3 rounded-2xl">
+    <div className="mb-4 flex items-center bg-[#f6f6f6] px-3 rounded-2xl text-sm">
       <Image
         src="/assets/txt_img.png"
         alt="txt img"

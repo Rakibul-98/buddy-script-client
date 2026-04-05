@@ -33,8 +33,8 @@ export default function AuthCard({
             priority
           />
         </div>
-        <p className="text-xl text-center mb-2">{subtitle}</p>
-        <h2 className="text-center text-2xl sm:text-3xl font-bold">{title}</h2>
+        <p className="text-center mb-2">{subtitle}</p>
+        <h2 className="text-center text-[28px] font-medium">{title}</h2>
       </div>
 
       {showGoogleButton && (
@@ -45,7 +45,7 @@ export default function AuthCard({
 
           <div className="flex items-center gap-10 mb-10">
             <div className="border h-0.5 w-full"></div>
-            <p className="text-muted-foreground">Or</p>
+            <p className="text-sm text-muted-foreground">Or</p>
             <div className="border h-0.5 w-full"></div>
           </div>
         </>
@@ -53,11 +53,11 @@ export default function AuthCard({
 
       {children}
 
-      <div className="mt-15 text-center text-muted-foreground">
+      <div className="mt-15 text-center text-muted-foreground text-sm">
         <span>{footerText} </span>
         <Link
           href={footerLinkHref}
-          className="text-[#1890FF] hover:text-[#1890FF]/95 font-medium"
+          className="text-[#1890FF] hover:text-[#1890FF]/95"
         >
           {footerLinkText}
         </Link>

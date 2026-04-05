@@ -22,7 +22,7 @@ export const ProfileSection = ({ showName = true, size = "small" }: ProfileSecti
         priority
         className="rounded-full"
       />
-      {showName && <span className="hidden lg:inline">{user?.firstName} {user?.lastName}</span>}
+      {showName && <span className="hidden lg:inline max-w-30 overflow-hidden text-ellipsis whitespace-nowrap">{user?.firstName} {user?.lastName}</span>}
       <ProfileDropdown />
     </div>
   );

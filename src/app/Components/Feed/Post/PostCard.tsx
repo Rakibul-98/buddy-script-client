@@ -92,7 +92,7 @@ export default function PostCard({ post, refetch }: any) {
               priority
             />
             <div>
-              <span className="text-lg">
+              <span>
                 {post.author.firstName} {post.author.lastName}
               </span>
               <div className="text-muted-foreground text-sm">
@@ -108,7 +108,6 @@ export default function PostCard({ post, refetch }: any) {
           </div>
           {user?.email === post.author.email && (
             <PostMenu
-              // onEdit={handleEdit}
               post={post}
               refetch={refetch}
               onDelete={handleDelete}
@@ -120,9 +119,7 @@ export default function PostCard({ post, refetch }: any) {
         </div>
       </div>
 
-      <div className="mb-4">
-        <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
-      </div>
+      <p className="text-sm mb-4">{post.content}</p>
 
       {post.imageUrl && (
         <div className="mb-4">
@@ -144,14 +141,14 @@ export default function PostCard({ post, refetch }: any) {
         </div>
       </div>
 
-      <div className="bg-[#fbfcfd] p-2 flex justify-between mt-6 gap-1">
+      <div className="bg-[#fbfcfd] p-2 flex justify-between mt-6 gap-1 text-sm">
         <button
-          onClick={handleLike} className={`w-full hover:bg-[#e4f1fd] ${isLiked && "bg-[#e4f1fd]"}  py-2 flex justify-center items-center gap-1`}>
-          <span className="text-2xl">😆</span>
+          onClick={handleLike} className={`w-full hover:bg-[#e4f1fd] ${isLiked && "bg-[#e4f1fd]"}  py-2 flex justify-center items-center gap-1 `}>
+          <span className="text-xl">😆</span>
           Haha
         </button>
-        <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><MdOutlineComment size={25} /> Comment</button>
-        <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><PiShareFat size={25} /> Share</button>
+        <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><MdOutlineComment size={22} /> Comment</button>
+        <button className="w-full hover:bg-[#e4f1fd] flex justify-center items-center gap-1"><PiShareFat size={22} /> Share</button>
       </div>
       <CommentSection postId={post.id} />
     </div>

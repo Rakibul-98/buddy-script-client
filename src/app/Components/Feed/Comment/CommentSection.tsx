@@ -107,7 +107,7 @@ export default function CommentSection({ postId }: CommentsSectionProps) {
       {comments.length > 1 && (
         <p
           onClick={() => setShowAll(!showAll)}
-          className="mt-8 text-muted-foreground cursor-pointer font-semibold"
+          className="mt-8 text-muted-foreground cursor-pointer font-medium text-sm"
         >
           {showAll
             ? "Hide comments"

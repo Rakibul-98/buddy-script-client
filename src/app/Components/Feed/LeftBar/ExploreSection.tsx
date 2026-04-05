@@ -64,10 +64,10 @@ export default function ExploreSection() {
             <div className={`flex items-center justify-between w-full text-muted-foreground`}>
               <p className="flex items-center gap-3 text-base">
                 <Icon size={22} />
-                <span className="group-hover:text-[#1890FF] transition-colors duration-200 font-semibold">{label}</span>
+                <span className="group-hover:text-[#1890FF] transition-colors duration-200">{label}</span>
               </p>
               {
-                isNew && <span className="text-xs bg-[#0acf83] text-white px-0.5 py-0.5 rounded-sm">New</span>
+                isNew && <span className="text-[13px] bg-[#0acf83] text-white px-0.5 py-0.5 rounded-sm">New</span>
               }
             </div>
           </div>

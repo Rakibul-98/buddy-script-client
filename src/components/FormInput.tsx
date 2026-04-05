@@ -25,7 +25,7 @@ export default function FormInput<T extends FieldValues>({
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-medium mb-2 text-center lg:text-left"
+        className="block font-medium mb-2 text-center lg:text-left"
       >
         {label}
       </label>
@@ -37,7 +37,7 @@ export default function FormInput<T extends FieldValues>({
           ...validation,
         })}
         placeholder={placeholder}
-        className="block w-full rounded-sm border border-[#F5F5F5] p-3 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF] text-lg"
+        className="block w-full rounded-sm border border-[#F5F5F5] px-3 py-2 focus:border-[#1890FF] focus:outline-none focus:ring-[#1890FF]"
       />
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>

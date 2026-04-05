@@ -103,7 +103,7 @@ export default function Login() {
 
           <div className="md:flex justify-between items-center gap-3 mb-10">
             <Checkbox label="Remember me" />
-            <p className="text-[#1890FF] text-center">Forgot password?</p>
+            <p className="text-[#1890FF] text-center text-sm">Forgot password?</p>
           </div>
 
           <AuthButton

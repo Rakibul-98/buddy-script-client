@@ -8,7 +8,7 @@ export default function Checkbox({ label }: CheckboxProps) {
       <div className="h-4 w-4 rounded-full border border-[#1890FF] p-0.75">
         <div className="h-full w-full rounded-full bg-[#1890FF]" />
       </div>
-      <p>{label}</p>
+      <p className="text-sm">{label}</p>
     </div>
   );
 }

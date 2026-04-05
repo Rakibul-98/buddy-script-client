@@ -45,7 +45,7 @@ export default function ProfileDropdown() {
             className="rounded-full object-cover"
           />
           <div className="space-y-1">
-            <h3 className="font-bold text-lg">{user?.firstName} {user?.lastName}</h3>
+            <h3 className="font-bold ">{user?.firstName} {user?.lastName}</h3>
             <p className="text-[#1890FF] text-sm cursor-pointer">
               View Profile
             </p>

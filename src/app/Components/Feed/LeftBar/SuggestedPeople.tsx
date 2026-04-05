@@ -42,13 +42,13 @@ export default function SuggestedPeople() {
                 priority
               />
               <div className='space-y-1'>
-                <p className="text-black">
+                <p className="text-black text-sm">
                   {name}
                 </p>
-                <p className="text-xs">{position}</p>
+                <p className="text-[11px]">{position}</p>
               </div>
             </div>
-            <button className='border px-1.75 py-1 hover:bg-[#1890FF] transition-colors duration-200 hover:text-white cursor-pointer'>Connect</button>
+            <button className='border px-1.75 py-1 hover:bg-[#1890FF] transition-colors duration-200 hover:text-white cursor-pointer text-xs'>Connect</button>
           </div>
         ))}
       </div>

@@ -76,11 +76,11 @@ export default function YourFriends() {
                 <p className="text-black hover:cursor-pointer">
                   {name}
                 </p>
-                <p className="text-xs">{position}</p>
+                <p className="text-[11px]">{position}</p>
               </div>
             </div>
             {
-              name == "Steve Jobs" ? <p className='text-xs'>5 minute ago</p> : <div className='h-3 w-3 bg-green-500 rounded-full border-2 border-white' />
+              name == "Steve Jobs" ? <p className='text-[11px]'>5 minute ago</p> : <div className='h-3 w-3 bg-green-500 rounded-full border-2 border-white' />
             }
           </div>
         ))}

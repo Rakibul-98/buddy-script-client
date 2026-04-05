@@ -5,7 +5,7 @@ import { useToggleLikeMutation } from "../../../../redux/features/like/likeApi";
 import { timeAgo } from "../../../utils";
 import { toast } from "sonner";
 
-export default function CommentActions({ user, isEditing, setIsReplying, isReplying, comment }: any) {
+export default function CommentActions({ user, isEditing, setIsReplying, isReplying, comment, level }: any) {
 
   const [toggleLike, { isLoading: isTogglingLike }] = useToggleLikeMutation();
   const [isLiked, setIsLiked] = useState(false);
@@ -40,12 +40,11 @@ export default function CommentActions({ user, isEditing, setIsReplying, isReply
   };
 
   return (
-    <div className="ms-16 flex gap-2 my-3">
+    <div className="ms-16 flex gap-2 my-3 text-sm">
       <button
         onClick={handleLike}
         disabled={isTogglingLike}
-        className={`transition-colors ${isLiked && "text-[#1890FF]"} hover:text-[#1890FF]"
-                }`}
+        className={`transition-colors ${isLiked && "text-[#1890FF]"} hover:text-[#1890FF]"} cursor-pointer`}
       >
         {isLiked ? "Liked." : "Like."}
       </button>
@@ -53,12 +52,13 @@ export default function CommentActions({ user, isEditing, setIsReplying, isReply
       {!isEditing && (
         <button
           onClick={() => setIsReplying(!isReplying)}
-          className=""
+          disabled={level > 0}
+          className="cursor-pointer"
         >
           {isReplying ? "Cancel." : "Reply."}
         </button>
       )}
-      <span>Share</span>
+      <span className="cursor-pointer" >Share</span>
       <span className=" text-muted-foreground">
         {timeAgo(comment.createdAt)}
       </span>

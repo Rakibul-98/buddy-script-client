@@ -23,9 +23,9 @@ export default function FriendsSection() {
             <p className="text-xs text-muted-foreground">Founder and CEO at Trophy</p>
           </div>
         </div>
-        <div className="flex gap-2 justify-between">
+        <div className="flex gap-2 justify-between text-sm">
           <button className='border px-1.75 py-2 hover:bg-[#1890FF] transition-colors duration-200 text-muted-foreground hover:text-white cursor-pointer w-1/2 rounded-sm'>Ignore</button>
-          <button className='border px-1.75 py-1 bg-[#1890FF] text-white hover:bg-[#1890FF]/90 cursor-pointer w-1/2 rounded-sm'>Connect</button>
+          <button className='border px-1.75 py-1 bg-[#1890FF] text-white hover:bg-[#1890FF]/90 cursor-pointer w-1/2 rounded-sm'>Follow</button>
         </div>
       </div>
     </div>

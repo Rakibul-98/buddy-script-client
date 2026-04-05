@@ -27,12 +27,12 @@ export default function Events() {
                     <p className='font-bold -mb-2'>10</p>
                     <span>Jul</span>
                   </div>
-                  <p className='text-lg '>No more terrorism no <br /> more cry</p>
+                  <p>No more terrorism no <br /> more cry</p>
                 </div>
               </div>
               <div className='flex justify-between items-center gap-2 border-t px-4 py-3'>
                 <p className='text-muted-foreground text-xs'>17 People Going</p>
-                <button className='border border-[#1890FF] bg-[#1890FF]/5 text-[#1890FF] px-3.25 py-px rounded-xs hover:bg-[#1890FF] transition-colors duration-200 hover:text-white cursor-pointer'>Going</button>
+                <button className='border border-[#1890FF] bg-[#1890FF]/5 text-[#1890FF] px-3.5 py-0.75 rounded-xs hover:bg-[#1890FF] transition-colors duration-200 hover:text-white cursor-pointer text-xs'>Going</button>
               </div>
             </div>
           ))}

@@ -128,19 +128,19 @@ export default function Comment({
               handleCreateComment={handleEditSubmit}
             />
           ) : (
-            <p className="text-muted-foreground">{comment.content}</p>
+            <p className="text-muted-foreground text-sm">{comment.content}</p>
           )}
         </div>
-        <div className="absolute right-0 -bottom-2 flex items-center shadow-md rounded-full px-1 bg-white">
+        <div className="absolute right-0 -bottom-2 flex items-center shadow-md rounded-full px-1 bg-white text-sm">
           <AiOutlineLike className="text-blue-500" />
           <IoMdHeartEmpty className="text-red-500" />
           <span>198</span>
         </div>
 
       </div>
-      <CommentActions user={user} isEditing={isEditing} setIsReplying={setIsReplying} isReplying={isReplying} comment={comment} />
+      <CommentActions level={level} user={user} isEditing={isEditing} setIsReplying={setIsReplying} isReplying={isReplying} comment={comment} />
 
-      {isReplying && (
+      {isReplying && level < 1 && (
         <div className="mt-2 ml-12">
           <CommentInput
             newComment={replyContent}
@@ -156,7 +156,7 @@ export default function Comment({
           {replies.length > 1 && (
             <p
               onClick={() => setShowAllReplies(!showAllReplies)}
-              className="text-sm text-muted-foreground cursor-pointer mb-1 ms-14"
+              className="text-sm font-medium text-muted-foreground cursor-pointer mb-1 ms-14"
             >
               {showAllReplies
                 ? "Hide replies"

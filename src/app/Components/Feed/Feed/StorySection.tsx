@@ -81,7 +81,7 @@ export default function StorySection() {
                   </div>
 
                   <div className="absolute bottom-0 w-full bg-[#112032] text-white hidden lg:flex flex-col items-center justify-center pt-8 pb-2 rounded-t-3xl">
-                    <p className="text-sm">Your Story</p>
+                    <p className="text-xs">Your Story</p>
                   </div>
                 </>
               ) : (
@@ -95,7 +95,7 @@ export default function StorySection() {
                     />
                   </div>
 
-                  <p className="absolute bottom-2.5 left-1/2 transform -translate-x-1/2 text-white text-sm font-medium whitespace-nowrap hidden lg:block">
+                  <p className="absolute bottom-2.5 left-1/2 transform -translate-x-1/2 text-white text-xs font-medium whitespace-nowrap hidden lg:block">
                     {story.name}
                   </p>
                 </>
