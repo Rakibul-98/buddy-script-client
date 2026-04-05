@@ -31,7 +31,9 @@ export default function AuthLayout({
         className="absolute bottom-0 right-60 object-contain object-right max-lg:hidden z-0"
         priority
       />
-      {children}
+      <div className="max-w-7xl mx-auto">
+        {children}
+      </div>
     </div>
   );
 }
