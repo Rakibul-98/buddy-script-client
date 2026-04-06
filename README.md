@@ -30,7 +30,7 @@ The frontend for **Buddy Script**, a modern social media-like platform designed 
 
 - **Node.js**: v18.0.0 or higher
 - **npm** or **yarn**
-- **Backend Service**: Ensure the [Buddy Script Backend](https://github.com/your-repo/buddy-script-server) is running.
+- **Backend Service**: Ensure the [Buddy Script Backend](https://github.com/Rakibul-98/buddy-script-server) is running.
 
 ### Installation
 
