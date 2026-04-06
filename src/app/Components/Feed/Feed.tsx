@@ -23,8 +23,10 @@ export default function Feed() {
 
   return (
     <div className="relative h-screen flex flex-col bg-[#f5f5f5] overflow-hidden">
-      <div className="absolute right-0 top-1/2 translate-y-1/2 rotate-90">
-        <ThemeToggleButton />
+      <div className="hidden xl:block xl:absolute right-0 top-1/2 -translate-y-1/2">
+        <div className="rotate-90">
+          <ThemeToggleButton />
+        </div>
       </div>
       <Navbar />
       <div className="flex-1 mx-auto max-w-lg md:max-w-2xl lg:max-w-7xl px-4 pt-4.5 pb-4.5 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6 overflow-hidden">
