@@ -134,7 +134,7 @@ export default function PostCard({ post, refetch }: any) {
       )}
 
       <div className="flex justify-between gap-6 pt-2 text-sm text-muted-foreground">
-        <LikedUserGroup likesCount={likesCount} />
+        <LikedUserGroup likesCount={likesCount} likes={post.likes} />
         <div className="flex items-center gap-3">
           <span><span className="text-black">{post._count.comments}</span> {post._count.comments === 1 ? "comment" : "comments"}</span>
           <span><span className="text-black">122</span> Shares</span>

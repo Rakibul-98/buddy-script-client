@@ -18,7 +18,7 @@ import NotificationDropdown from "./NotificationDropdown";
 
 export default function Navbar() {
   const [activeIcon, setActiveIcon] = useState("home");
-  const [isNotificationOpen, setIsNotificationOpen] = useState(true);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const handleIconClick = (id: string) => {
     if (id === "notifications") {
