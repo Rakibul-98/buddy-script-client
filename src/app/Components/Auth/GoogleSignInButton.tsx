@@ -75,7 +75,7 @@ export default function GoogleSignInButton({
           width={20}
           height={20}
         />
-        <span className=" font-medium">{isLoading ? "Authenticating... keep patient!" : displayText}</span>
+        <span className=" font-medium">{isLoading ? "Authenticating..." : displayText}</span>
       </button>
     </div>
   );

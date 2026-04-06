@@ -13,6 +13,7 @@ import YourFriends from "./RightBar/YourFriends";
 import CreatePostSection from "./Post/CreatePostSection";
 import StorySection from "./Feed/StorySection";
 import PostSkeleton from "./Post/PostSkeleton";
+import ThemeToggleButton from "../../../components/ThemeToggleButton";
 
 
 export default function Feed() {
@@ -21,7 +22,10 @@ export default function Feed() {
   const posts = data?.data || [];
 
   return (
-    <div className="h-screen flex flex-col bg-[#f5f5f5] overflow-hidden">
+    <div className="relative h-screen flex flex-col bg-[#f5f5f5] overflow-hidden">
+      <div className="absolute right-0 top-1/2 translate-y-1/2 rotate-90">
+        <ThemeToggleButton />
+      </div>
       <Navbar />
       <div className="flex-1 mx-auto max-w-lg md:max-w-2xl lg:max-w-7xl px-4 pt-4.5 pb-4.5 xl:px-0 grid grid-cols-1 lg:grid-cols-4 gap-6 overflow-hidden">
         <div className="hidden lg:block space-y-4.5 overflow-y-auto">
