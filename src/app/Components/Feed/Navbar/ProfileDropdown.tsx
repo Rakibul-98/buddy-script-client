@@ -34,7 +34,7 @@ export default function ProfileDropdown() {
       <DropdownMenuTrigger className="focus:outline-none">
         <IoIosArrowDown className="cursor-pointer hover:text-[#1890FF] transition-colors duration-200" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="hidden sm:block  w-75 p-4 mt-2 rounded-md shadow ring-0">
+      <DropdownMenuContent className="hidden sm:block  w-75 p-4 mt-2 rounded-md shadow ring-0" align="end">
         <div className="flex gap-3 items-center mb-4">
           <Image
             src="/assets/profile.png"

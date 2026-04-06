@@ -133,8 +133,8 @@ export default function Comment({
         </div>
         <div className="absolute right-0 -bottom-2 flex items-center shadow-md rounded-full px-1 bg-white text-sm">
           <AiOutlineLike className="text-blue-500" />
-          <IoMdHeartEmpty className="text-red-500" />
-          <span>198</span>
+          <IoMdHeartEmpty className="text-red-500 me-1" />
+          <span>{comment._count?.likes || 0}</span>
         </div>
 
       </div>

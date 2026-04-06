@@ -14,12 +14,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { NAV_ICONS } from "./menuItem";
+import NotificationDropdown from "./NotificationDropdown";
 
 export default function Navbar() {
   const [activeIcon, setActiveIcon] = useState("home");
+  const [isNotificationOpen, setIsNotificationOpen] = useState(true);
 
   const handleIconClick = (id: string) => {
+    if (id === "notifications") {
+      toggleNotificationDropdown();
+    }
     setActiveIcon(id);
+  };
+
+
+  const toggleNotificationDropdown = () => {
+    setIsNotificationOpen(!isNotificationOpen);
   };
 
   const getIconBorderClass = (iconId: string) => {
@@ -32,7 +42,7 @@ export default function Navbar() {
 
   return (
     <div>
-      <header className="bg-white">
+      <header className=" bg-white">
         <div className="mx-auto max-w-7xl px-4 py-4.25 lg:py-0 xl:px-0 flex justify-between items-center gap-3">
           {/* Logo */}
           <div className="relative w-35 h-7.5">
@@ -51,7 +61,7 @@ export default function Navbar() {
           <SearchBar className="hidden lg:flex w-105" />
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-6.5">
+          <div className="relative hidden lg:flex items-center gap-6.5">
             {NAV_ICONS.map((icon) => (
               <div
                 key={icon.id}
@@ -65,6 +75,12 @@ export default function Navbar() {
                 />
               </div>
             ))}
+            <NotificationDropdown
+              isOpen={isNotificationOpen}
+              setIsOpen={setIsNotificationOpen}
+              toggleNotificationDropdown={toggleNotificationDropdown}
+            />
+
             <ProfileSection showName={true} />
           </div>
 
