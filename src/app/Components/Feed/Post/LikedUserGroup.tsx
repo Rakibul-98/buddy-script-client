@@ -1,11 +1,6 @@
 import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "../../../../components/ui/avatar";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { useState } from "react";
+import LikedUsersDialog from "../../../../components/LikedUserDialog";
 
 interface LikeUser {
   id: string;
@@ -59,30 +54,7 @@ export default function LikedUserGroup({ likesCount, likes }: LikedUserGroupProp
         </AvatarGroup>
       </div>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Liked by</DialogTitle>
-          </DialogHeader>
-          <ul className="mt-2 space-y-3 max-h-72 overflow-y-auto">
-            {likes.map((like, index) => (
-              <li key={like.id} className="flex items-center gap-3">
-                <Avatar className="h-9 w-9">
-                  <AvatarImage
-                    src={FAKE_AVATARS[index % FAKE_AVATARS.length]}
-                    alt={like.user.firstName} />
-                  <AvatarFallback>
-                    {like.user.firstName[0]}{like.user.lastName[0]}
-                  </AvatarFallback>
-                </Avatar>
-                <span className="text-sm font-medium">
-                  {like.user.firstName} {like.user.lastName}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </DialogContent>
-      </Dialog>
+      <LikedUsersDialog open={open} onOpenChange={setOpen} likes={likes} />
     </>
   );
 }

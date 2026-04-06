@@ -11,6 +11,7 @@ import CommentInput from "./CommentInput";
 import CommentActions from "./CommentActions";
 import { Edit, Trash } from "lucide-react";
 import ConfirmDeleteDialog from "../../../../components/ConfirmDeleteDialog";
+import LikedUsersDialog from "../../../../components/LikedUserDialog";
 
 
 interface CommentProps {
@@ -38,6 +39,7 @@ export default function Comment({
   const [replyContent, setReplyContent] = useState("");
   const [editContent, setEditContent] = useState(comment.content);
   const [showAllReplies, setShowAllReplies] = useState(false);
+  const [likesDialogOpen, setLikesDialogOpen] = useState(false);
 
 
 
@@ -98,11 +100,6 @@ export default function Comment({
               <span className="font-semibold text-sm text-gray-900">
                 {comment.author.firstName} {comment.author.lastName}
               </span>
-              {comment._count?.likes > 0 && (
-                <span className="text-xs text-gray-500">
-                  ❤️ {comment._count.likes} likes
-                </span>
-              )}
             </div>
 
             {user?.email === comment.author.email && (
@@ -131,13 +128,19 @@ export default function Comment({
             <p className="text-muted-foreground text-sm">{comment.content}</p>
           )}
         </div>
-        <div className="absolute right-0 -bottom-2 flex items-center shadow-md rounded-full px-1 bg-white text-sm">
+        <div
+          onClick={() => comment.likes?.length > 0 && setLikesDialogOpen(true)}
+          className="absolute right-0 -bottom-2 flex items-center shadow-md rounded-full px-1 bg-white text-sm">
           <AiOutlineLike className="text-blue-500" />
           <IoMdHeartEmpty className="text-red-500 me-1" />
           <span>{comment._count?.likes || 0}</span>
         </div>
-
       </div>
+      <LikedUsersDialog
+        open={likesDialogOpen}
+        onOpenChange={setLikesDialogOpen}
+        likes={comment.likes || []}
+      />
       <CommentActions level={level} user={user} isEditing={isEditing} setIsReplying={setIsReplying} isReplying={isReplying} comment={comment} />
 
       {isReplying && level < 1 && (
